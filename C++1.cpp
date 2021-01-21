@@ -2,24 +2,28 @@
 using namespace std;
 
 int main() {
+
+	//1.前置递增
+	//2.后置递增
+	//3.前置和后置的区别
+
+	int a = 10;
+	++a;//让变量+1
+	cout <<"a="<<a << endl;
 	
-	// %取模（余数）
+	int	b = 10;
+	b++;//让变量+1
+	cout << "b="<<b << endl;
+
 	int a1 = 10;
-	int b1 = 3;
-	cout << a1 % b1 << endl;
+	int b1 = ++a1 * 10;//前置运算，先让变量进行+1，再进行表达式运算
+	cout << "a1=" << a1 << endl;//这里的a1进行了++运算
+	cout << "b1=" << b1 << endl;
 
 	int a2 = 10;
-	int b2 = 20;
-	cout << a2 % b2 << endl;
-
-	//int a3 = 10;
-	//int b3 = 0;
-	//cout << a3 % b3 << endl; //取模运算是基于除法运算，除数为0的时候不可以做取模运算
-
-	//double d1 = 3.14;
-	//double d2 = 1.5;
-	//cout << d1 % d2 << endl;//C++中小数不可以做取模运算
-
+	int b2 = a2++ * 10;//后置运算 ，先进行表达式运算，再进行++
+	cout << "a2=" << a2 << endl;//这里的a2进行了++运算
+	cout << "b2=" << b2 << endl;
 
 	system("pause");
 
