@@ -3,50 +3,68 @@ using namespace std;
 
 int main() {
 
-	//选择结构 单行if语句
-	//用户输入分数，若>600，视为考上一本，>500，则考上二本，>400，则视为考上三本，否则专科
+	//三只小猪称体重
+	
+	//1.输入三只小猪的体重
+	//2.判断小猪的体重
+	//3.输出小猪的体重
 
-	//1.用户输入分数
-	int score = 0;
-	cout << "请输入您的分数:" ;
-	cin >> score;
-	//2.输出用户分数
-	cout << "您的分数为：" << score << endl;
+	//输入小猪的体重
+	int a, b, c;
+	cout << "请输入小猪a的体重=";
+	cin >> a;
+	cout << "请输入小猪b的体重=";
+	cin >> b;
+	cout << "请输入小猪c的体重=";
+	cin >> c;
+	
+	//输出三只小猪的体重
+	cout << "小猪a的体重为" << a << "kg" << endl << "小猪b的体重为" << b << "kg" << endl << "小猪c的体重为" << c << "kg" << endl;
 
-	//3.判断用户分数是>600，并输出用户是否考上一本大学
-	if (score >= 600)//千万不要加分号
+	//判断小猪重量
+
+	
+	if (a < b)
 	{
-		cout << "恭喜您考上一本大学" << endl;
-
-		if (score >= 700)
+		if ( b < c)//c>a c>b
 		{
-			cout << "恭喜您能考上清华大学！" << endl;
+			cout << "小猪体重排序为a<b<c" << endl;
 		}
-		else if (score >= 650)
+		else//b>a b>c
 		{
-			cout << "恭喜您能考上人民大学" << endl;
+			if (a<c)
+			{
+				cout << "三只小猪体重排序为a<c<b" << endl;
+
+			}
+			else
+			{
+				cout << "三只小猪体重排序为c<a<b" << endl;
+
+			}
 		}
-		
-		
-	}
-	else if(score >= 500)
-	{
-
-		cout << "恭喜您考上二本大学" << endl;
-
-	}
-	else if (score >= 400)
-	{
-		cout << "恭喜您考上三本大学" << endl;
-
 	}
 	else
 	{
-		cout << "带专人，带专魂，带专都是人上人！" << endl;
+		if (a<c) //b<a a<c
+		{
+			cout << "三只小猪的体重排序为b<a<c" << endl;
+		}
+		else //a>b a>c
+		{
+			if (b>c)
+			{
+				cout << "三只小猪的体重排序为c<b<a" << endl;
 
+			}
+			else //b<c
+			{
+				cout << "三只小猪的体重排序为b<c<a" << endl;
+
+			}
+
+		}
 	}
-
-	//比如分数650，超过600 500 400  但是只会执行第一个判断
 
 	system("pause");
 
