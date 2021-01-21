@@ -1,42 +1,26 @@
 #include<iostream>
 using namespace std;
-#include<ctime>//系统时间头文件
+
 int main() 
-{
-	
-	//猜数字游戏，猜一个数字和随机数字比较
-	//猜对了退出游戏
-	//猜错了，提示结果过大or过小，再猜一次
-
-	//添加随机数种子 利用当前系统时间生成随机数，防止每次随机数都一样
-	srand((unsigned int)time(NULL));
-	//1.系统生成随机数
-	int num = rand() % 100 + 1;//生成0-99的随机数
-
-	//2.玩家输入的数据
-	int value = 0;
-	while (1)
+{ 
+	//水仙花数：一个三位数，每个位上的数字的三次幂之和等于其本身
+	//例如：1^3+5^3+3^3=153
+	//利用do while 语句 求出所有三位数中的水仙花数
+	int num = 100;
+	do
 	{
-		cin >> value;
-		if (value > num)
+		//1.找出所有的三位数
+		int a = num % 10;//取个位
+		int b = num / 10 % 10;//取十位
+		int c = num / 100;//取百位的
+		if (a*a*a+b*b*b+c*c*c==num)//判断是否是水仙花数
 		{
-			cout << "您猜测的数据过大" << endl;
-
+			cout << num << endl;
 		}
-		else if (value < num)
-		{
-			cout << "您猜测的数据过小" << endl;
-
-		}
-		else if (value = num)
-		{
-			cout << "恭喜您猜对了" << endl;
-			break;
-		}
-	}
+		num++;
+	} while (num<1000);
 
 	system("pause");
-
 	return 0;
 
 }
