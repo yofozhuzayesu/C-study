@@ -2,69 +2,22 @@
 using namespace std;
 
 int main() {
-
-	//三只小猪称体重
 	
-	//1.输入三只小猪的体重
-	//2.判断小猪的体重
-	//3.输出小猪的体重
+	//三目运算符  表达式1？ 表达式2：表达式3
+	//意思是判断表达式1 是否为真，则返回表达式2，否则返回表达式3
 
-	//输入小猪的体重
-	int a, b, c;
-	cout << "请输入小猪a的体重=";
-	cin >> a;
-	cout << "请输入小猪b的体重=";
-	cin >> b;
-	cout << "请输入小猪c的体重=";
-	cin >> c;
-	
-	//输出三只小猪的体重
-	cout << "小猪a的体重为" << a << "kg" << endl << "小猪b的体重为" << b << "kg" << endl << "小猪c的体重为" << c << "kg" << endl;
+	//创建三个变量 a b c 
+	//将a和b做比较，将变量大的值赋值给c
 
-	//判断小猪重量
+	int a = 10;
+	int b = 20;
+	int c = 0;
+	c = (a > b ? a : b);
+	cout << "c=" << c << endl;
 
-	
-	if (a < b)
-	{
-		if ( b < c)//c>a c>b
-		{
-			cout << "小猪体重排序为a<b<c" << endl;
-		}
-		else//b>a b>c
-		{
-			if (a<c)
-			{
-				cout << "三只小猪体重排序为a<c<b" << endl;
-
-			}
-			else
-			{
-				cout << "三只小猪体重排序为c<a<b" << endl;
-
-			}
-		}
-	}
-	else
-	{
-		if (a<c) //b<a a<c
-		{
-			cout << "三只小猪的体重排序为b<a<c" << endl;
-		}
-		else //a>b a>c
-		{
-			if (b>c)
-			{
-				cout << "三只小猪的体重排序为c<b<a" << endl;
-
-			}
-			else //b<c
-			{
-				cout << "三只小猪的体重排序为b<c<a" << endl;
-
-			}
-
-		}
-	}
+	(a < b ? a : b) = 100;//三目运算符返回的是变量，可以继续赋值
+	cout << "a=" << a << endl;
+	cout << "b=" << b << endl;
 
 	system("pause");
 
