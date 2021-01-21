@@ -18,6 +18,16 @@ int main() {
 	{
 		cout << "恭喜您考上一本大学" << endl;
 
+		if (score >= 700)
+		{
+			cout << "恭喜您能考上清华大学！" << endl;
+		}
+		else if (score >= 650)
+		{
+			cout << "恭喜您能考上人民大学" << endl;
+		}
+		
+		
 	}
 	else if(score >= 500)
 	{
