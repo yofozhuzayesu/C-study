@@ -4,18 +4,20 @@ using namespace std;
 int main() 
 { 
 	
-	//continue 语句
-	//在循环语句中，跳过本次循环中余下尚未执行的语句，继续执行下一次循环
+	//goto 无条件跳转语句
+	//如果标记的名称存在，执行到goto语句，会跳转到标记的位置
+	//goto标记常用大写
+	//标记格式： 标记：
 
-	for (int i = 0; i < 100; i++)
-	{
-		if (i % 2 == 0)//输出偶数，奇数不输出
-		{
-			cout << i << endl;
-		}
-		continue;//可以筛选条件，执行到此就不再向下执行，执行下一次操作
-	}
-	
+	cout << "1" << endl;
+	cout << "2" << endl;
+	goto FLAG;//跳转到标记
+	cout << "3" << endl;
+	cout << "4" << endl;
+	FLAG ://标记
+	cout << "5" << endl;
+
+
 	system("pause");
 	return 0;
 
