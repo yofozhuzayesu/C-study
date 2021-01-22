@@ -4,17 +4,18 @@ using namespace std;
 int main() 
 { 
 	
-	//嵌套循环实现99乘法表
+	//continue 语句
+	//在循环语句中，跳过本次循环中余下尚未执行的语句，继续执行下一次循环
 
-	for (int i = 1; i <= 9; i++)//外层循环
+	for (int i = 0; i < 100; i++)
 	{
-		for (int j = 1; j <=i; j++)//内层循环
+		if (i % 2 == 0)//输出偶数，奇数不输出
 		{
-			cout << j << "*" << i << "=" << i * j<<"\t";
+			cout << i << endl;
 		}
-		cout << endl;
-
+		continue;//可以筛选条件，执行到此就不再向下执行，执行下一次操作
 	}
+	
 	system("pause");
 	return 0;
 
