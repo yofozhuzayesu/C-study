@@ -3,25 +3,26 @@ using namespace std;
 
 int main()
 {
-	//一维数组名
-	/*1.可以统计整个数组在内存中的长度
-	  2.可以获取数组在内存中的首地址
-	  */
-	
-	//1.查看数组的内存长度
-	int arr[5] = { 1,2,3,4,5 };
-	cout << "整个数组占用内存空间为：" << sizeof(arr) << endl;
-	cout << "每个元素占用内存空间为：" << sizeof(arr[0]) << endl;
-	cout << "数组中的元素个数为：" << sizeof(arr) / sizeof(arr[0]) << endl;
+	//5只小猪称体重
 
-	//2.查看数组的首地址
-	cout <<"数组的首地址："<<(int)arr << endl;//(int)arr强制将十六进制转成十进制
+	int arr[5];
+	//1.输入小猪体重
+	for (int i = 0; i < 5; i++)
+	{
+		cout << "请输入第" << i+1 << "只小猪的体重：" << endl;
+		cin >> arr[i];
 
-	//3.查看第一个元素的地址
-	cout << "数组中第二个元素的地址为：" << (int)&arr[1] << endl;//&是取址符号
-
-
-	//注意：数组名是一个常量，不可以赋值
+	}
+	//2.将小猪体重排序
+	int max = 0;
+	for (int j = 0; j < 5; j++)
+	{
+		if (arr[j]>=max)
+		{
+			max = arr[j];
+		}
+	}
+	cout << "小猪体重最重为：" << max << endl;
 
 	system("pause");
 	return 0;
