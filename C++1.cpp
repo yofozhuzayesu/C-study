@@ -3,26 +3,33 @@
 
 using namespace std;
 
+//函数
+/*
+1.返回值类型
+2.函数名
+3.参数表列
+4.函数体语句
+5.return语句
+
+*/
+//实现一个加法的函数，计算数据相加的结果，并且返回
+
+int add(int num1,int num2)//函数定义的时候num1,num2没有真实的数据，叫做形参
+{
+	int sum = num1 + num2;
+	return sum;
+}
 int main()
 {
-	//二维数组应用
-	//有三名同学的语数外成绩，输出三名同学的成绩
-	int score[3][3] = {
-		{100,100,100},
-		{90,20,60},
-		{60,50,90}
-	};
-	string names[3] = { "张三","李四","王五" };//需要调用string头文件
-	for (int i = 0; i < 3; i++)
-	{
-		int sum = 0;
-		for (int j = 0; j < 3; j++)
-		{
-			sum += score[i][j];
-		}
-		cout <<names[i]<<"的总成绩为："<<sum << endl;
+	int num1,num2;//此处的sum1 sum2是实际参数，叫做实参
+	cout << "请输入第一个数：";
+	cin >> num1;
+	cout << "请输入第二个数：";
+	cin >> num2;
 
-	}
+	int sum = add(num1, num2);//函数调用的时候，实参会传递给形参，函数的返回值传递给sum
+	cout << "两个数的总和为："<<sum << endl;
+
 	system("pause");
 	return 0;
 
