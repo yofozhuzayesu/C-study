@@ -3,27 +3,31 @@ using namespace std;
 
 int main()
 {
-	//5只小猪称体重
+	//数组元素逆置
+	
+	//创建数组
+	int arr[] = { 1,2,3,4,5 };
 
-	int arr[5];
-	//1.输入小猪体重
-	for (int i = 0; i < 5; i++)
+	//逆置数组
+
+	int start = 0;//记录起始下标位置
+	int end = sizeof(arr) / sizeof(arr[0])-1;//记录结束下标位置
+
+	while (start<end)//逆置元素
 	{
-		cout << "请输入第" << i+1 << "只小猪的体重：" << endl;
-		cin >> arr[i];
+		int temp = arr[start];
+		arr[start] = arr[end];
+		arr[end] = temp;
+		end--;
+		start++;
+	}
+		
+	
+	for (int i = 0; i < 5; i++)//输出元素
+	{
+		cout << arr[i] << endl;
 
 	}
-	//2.将小猪体重排序
-	int max = 0;
-	for (int j = 0; j < 5; j++)
-	{
-		if (arr[j]>=max)
-		{
-			max = arr[j];
-		}
-	}
-	cout << "小猪体重最重为：" << max << endl;
-
 	system("pause");
 	return 0;
 
