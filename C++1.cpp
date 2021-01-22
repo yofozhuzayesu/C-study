@@ -3,22 +3,27 @@ using namespace std;
 
 int main() 
 { 
-	//水仙花数：一个三位数，每个位上的数字的三次幂之和等于其本身
-	//例如：1^3+5^3+3^3=153
-	//利用do while 语句 求出所有三位数中的水仙花数
-	int num = 100;
-	do
+	//for循环语句
+	//语法 for (起始表达式;条件表达式;末尾表达式）
+	//｛
+	//   循环语句
+	//	｝
+
+	for (int i = 1; i <= 100; i++)
 	{
-		//1.找出所有的三位数
-		int a = num % 10;//取个位
-		int b = num / 10 % 10;//取十位
-		int c = num / 100;//取百位的
-		if (a*a*a+b*b*b+c*c*c==num)//判断是否是水仙花数
+		int a = i % 10;
+		int b = i / 10;
+		if (a==7||b==7||i%7==0)
 		{
-			cout << num << endl;
+			cout << "敲桌子" << endl;
+
 		}
-		num++;
-	} while (num<1000);
+		else
+		{
+			cout << i << endl;
+		}
+		
+	}
 
 	system("pause");
 	return 0;
