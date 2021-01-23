@@ -1,29 +1,34 @@
 #include<iostream>
 #include<string>
+#include"swap.h"//注意这里用的是引号，不是尖括号
 using namespace std;
 
-//函数的声明
-//比较函数，实现两个整型数字进行比较，返回较大的值
-
-//如果不声明，则只能将函数的定义写在main之前
-/*int max(int a, int b)
-{
-	return a > b ? a : b;//三目运算符简化
-}*/
-
-
-int max(int a, int b);//函数的声明，提前告诉编辑器函数存在，可将函数写在声明之后任意位置
-//声明能写多次，但是定义只能写一次
-
+//指针
+//基本概念：通过指针间接访问内存
+/*
+1.内存编号从0开始，一般用16进制标书
+2.可以利用指针变量记录地址
+*/
 
 int main()
 {
-	cout << "两个数中最大的值为：" << max(10,20) << endl;//cout可以直接输出函数的值
+	//定义指针
+	int a = 10;
+	//定义指针的语法：数据类型 * 指针变量
+	int * p;
+	//让指针记录变量a的地址
+	p = &a;
+	cout << "a的地址为：" << &a << endl;
+	cout << "指针p=" << p << endl;
+
+	//2.使用指针
+	//可以通过解引用的方式来找到指针指向的内存
+	//指针前加*表示解引用，找到指针指向的内存中的数据
+	*p = 100;
+	cout << "a=" << a << endl;
+	cout << "*p=" << *p << endl;
+
 	system("pause");
 	return 0;
 }
 
-int max(int a, int b)
-{
-	return a > b ? a : b;//三目运算符简化
-}
