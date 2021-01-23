@@ -1,58 +1,29 @@
 #include<iostream>
 #include<string>
-
 using namespace std;
 
-//函数常见形式
-/*
-1.无参无返
-2.有参无返
-3.有参有返
-4.无参有返
-*/
+//函数的声明
+//比较函数，实现两个整型数字进行比较，返回较大的值
 
-//1.无参无返
-void test1()
+//如果不声明，则只能将函数的定义写在main之前
+/*int max(int a, int b)
 {
-	cout << "this is test1" << endl;
-}
+	return a > b ? a : b;//三目运算符简化
+}*/
 
-//2.无参无返
 
-void test2(int a )
-{
-	cout << "this is test2 a=" << a<<endl;
+int max(int a, int b);//函数的声明，提前告诉编辑器函数存在，可将函数写在声明之后任意位置
+//声明能写多次，但是定义只能写一次
 
-}
 
-//3.有参有返
-int test3(int a, int b)
-{
-	int sum = a + b;
-	return sum;
-}
-
-//4.无参有返
-int test4()
-{
-	return 100;
-
-}
 int main()
 {
-	//test1
-	test1();//注意不要漏掉括号
-	//test2
-	test2(20);
-	//test3
-	int num1 = test3(10,20);
-	cout << num1 << endl;
-	//test4
-	int num2 = test4();
-	cout << num2 << endl;
-
-
+	cout << "两个数中最大的值为：" << max(10,20) << endl;//cout可以直接输出函数的值
 	system("pause");
 	return 0;
+}
 
+int max(int a, int b)
+{
+	return a > b ? a : b;//三目运算符简化
 }
