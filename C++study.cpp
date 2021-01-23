@@ -2,20 +2,26 @@
 #include<string>
 using namespace std;
 
-//指针占用内存空间
-//在32位操作系统下：指针变量占4个字节的内存空间(无论什么类型的指针，float double char string)
-//64位：8个字节  即x64
+//空指针：指针变量指向内存中编号为0的空间
+//用途：初始化指针变量（即一开始指针不知道指向哪，就指向0好了）
+//注意：空指针指向的内存是不可访问的
 
+//野指针：指针变量指向非法的内存空间
 
 int main()
 {
-	int a = 10;
-	int *p = &a;
-	cout << "指针占用的内存空间=" << sizeof(float * ) << endl;
-	cout << "指针占用的内存空间=" << sizeof(int *) << endl;
-	cout << "指针占用的内存空间=" << sizeof(double *) << endl;
-	cout << "指针占用的内存空间=" << sizeof(char *) << endl;
-	cout << "指针占用的内存空间=" << sizeof(string *) << endl;
+	
+	/*
+	//空指针
+	int *p = NULL;
+	//p = 100;  0-255之间的内存编号是系统占用的， 不可访问
+	*/
+
+	//野指针
+	//在程序中尽量避免野指针
+	int * p = (int *)0x11110;//这个指针地址并未申请，无权限访问，运行的时候会崩溃
+	cout << *p << endl;
 	system("pause");
 	return 0;
 }
+
