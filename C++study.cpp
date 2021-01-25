@@ -2,7 +2,9 @@
 #include<string>
 using namespace std;
 
-//结构体嵌套结构体，结构体中的成员可以是另一个结构体
+//结构体做函数参数
+//两种传递方式 值传递和地址传递
+
 
 
 struct student
@@ -12,26 +14,34 @@ struct student
 	int grade;
 };
 
-struct teacher
+//值传递方式
+void PrintStu(student stu)
 {
-	int id;
-	string name;
-	int age;
-	struct student stu;//辅导的学生 要加stu（因为是变量，而不是student 类型的变量名）
-};
+	stu.age = 100;
+	cout << stu.name << endl;
+	cout << stu.age << endl;
+	cout << stu.grade << endl;
+
+}
+
+//地址传递方式
+void PrintStu2(student *p)//struct可以省略
+{
+	p->age = 100;
+	cout << p->name << endl;
+	cout << p->age << endl;
+	cout << p->grade << endl;
+}
 int main()
 {
-	//创建老师
-	teacher t;
-	t.id = 16664;
-	t.age = 56;
-	t.name = "张三";
-	t.stu.name = "李四";
-	t.stu.grade = 18;
-	t.stu.grade = 65;
+	//值传递  不修饰实参
+	student s = { "张三",18,65 };
+	//PrintStu(s);
+	//cout << s.age << endl;
 
-	cout << t.name << endl;
-	cout << t.stu.name << endl;
+	//地址传递 会修饰实参
+	PrintStu2(&s);
+	cout << s.age << endl;
 	system("pause");
 	return 0;
 }
