@@ -2,45 +2,56 @@
 #include<string>
 using namespace std;
 
+//结构体：属于用户自己定义的数据类型，用于用户存储不同的数据类型
 
-//指针、数组、函数
-//封装一个函数，利用冒泡排序，实现对整形数组的升序排序
 
-//参数1 数组的首地址 参数2 数组长度
-void BubbleSort(int arr[],int len)//参数是数组时，传递的是数组的首地址，在函数中无法计算数组长度，需要在外部计算
+//1.创建学生数据类型：包括（姓名、年龄、分数）
+//自定义数据类型：一些类型集合组成的一个类型
+//语法 struct 类型名称｛成员列表｝
+
+struct  student
 {
-	for (int i = 0; i < len-1; i++)
-	{
-		int * p = arr;//将指针重新定位到数组头部
-		for (int j = 0; j < len- i-1; j++)
-		{	
-			if (*p > *(p + 1))//*的优先级比+高，所以要加括号，以下同理
-			{
-				int temp = *p;
-				*p = *(p + 1);
-				*(p + 1) = temp;
-			}
-			p++;
-		}
-	}
-	int *p2 = arr;//for循环中的变量作用域只在for内，因此要重新定义一个指针
-	for (int i = 0; i < len; i++)
-	{
-		cout << *p2 << endl;
-		p2++;
-	}
-}
-
+	//成员类别
+	//姓名
+	string name;
+	//年龄
+	int age;
+	//分数
+	int grade;
+}s3;//创建结构体的时候 顺便创建结构体变量
 
 int main()
 {
-	int arr2[] = {5,4,6,8,2,3,7,5,8,6,9,4,5,2,6};
-	int length = sizeof(arr2) / sizeof(arr2[0]);
-	BubbleSort(arr2,length);
-	for (int i = 0; i < length; i++)
-	{
-		cout << arr2[i];//输出的也是排序之后的，说明地址传递会修饰实参
-	}
+	//2.通过学生类型创建具体学生
+	//2.1 struct student s1;
+	student s1;//创建结构体变量的时候，关键字struct可以省略，但是创建的时候不可以省略
+	//给s1属性赋值，通过.访问结构体变量中的属性
+	s1.name = "张三";
+	s1.age = 18;
+	s1.grade = 95;
+	cout << "姓名：" << s1.name << endl;
+	cout << "年龄：" << s1.age << endl;
+	cout << "成绩：" << s1.grade << endl;
+
+	//2.2 struct student s2 = { , , };
+	struct student s2 = {
+		"李四",
+		19,
+		65
+	};
+	cout << "姓名：" << s2.name << endl;
+	cout << "年龄：" << s2.age << endl;
+	cout << "成绩：" << s2.grade << endl;
+
+	//2.3 在定义结构体时顺便创建结构体变量,一般不用该方式
+	s3.name = "王五";
+	s3.age = 20;
+	s3.grade = 96;
+	cout << "姓名：" << s3.name << endl;
+	cout << "年龄：" << s3.age << endl;
+	cout << "成绩：" << s3.grade << endl;
+
+
 	system("pause");
 	return 0;
 }
