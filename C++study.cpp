@@ -2,7 +2,8 @@
 #include<string>
 using namespace std;
 
-//结构体指针，利用操作符->可以通过结构体指针访问结构体属性
+//结构体嵌套结构体，结构体中的成员可以是另一个结构体
+
 
 struct student
 {
@@ -11,21 +12,26 @@ struct student
 	int grade;
 };
 
-
+struct teacher
+{
+	int id;
+	string name;
+	int age;
+	struct student stu;//辅导的学生 要加stu（因为是变量，而不是student 类型的变量名）
+};
 int main()
 {
-	//创建学生结构体变量
-	student s1 = { "张三",18,65 };
+	//创建老师
+	teacher t;
+	t.id = 16664;
+	t.age = 56;
+	t.name = "张三";
+	t.stu.name = "李四";
+	t.stu.grade = 18;
+	t.stu.grade = 65;
 
-	//通过指针指向结构体变量
-	student * p = &s1;
-
-	//通过指针访问结构体变量中的数据,->
-	cout << p->name << endl;
-	cout << p->age << endl;
-	cout << p->grade << endl;
-
-
+	cout << t.name << endl;
+	cout << t.stu.name << endl;
 	system("pause");
 	return 0;
 }
