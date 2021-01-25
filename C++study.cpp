@@ -2,10 +2,8 @@
 #include<string>
 using namespace std;
 
-//结构体做函数参数
-//两种传递方式 值传递和地址传递
-
-
+//结构体中用const防止误操作
+//const使用场景——地址传递
 
 struct student
 {
@@ -14,34 +12,24 @@ struct student
 	int grade;
 };
 
-//值传递方式
-void PrintStu(student stu)
+//打印结构体名称
+//采用地址传递方式，可以减少内存空间，并且不会复制新的副本出来
+void PrintStudents(const student *s)
 {
-	stu.age = 100;
-	cout << stu.name << endl;
-	cout << stu.age << endl;
-	cout << stu.grade << endl;
+	//s->age = 100;加入const之后，一旦有修改的操作就会报错，防止我们的误操作
+	cout << s->name << endl;
+	cout << s->age << endl;
+	cout << s->grade << endl;
 
 }
 
-//地址传递方式
-void PrintStu2(student *p)//struct可以省略
-{
-	p->age = 100;
-	cout << p->name << endl;
-	cout << p->age << endl;
-	cout << p->grade << endl;
-}
 int main()
 {
-	//值传递  不修饰实参
-	student s = { "张三",18,65 };
-	//PrintStu(s);
-	//cout << s.age << endl;
+	//创建结构体变量
+	student s1 = { "张三",15,60 };
+	//通过函数打印结构体变量信息
+	PrintStudents(&s1);//
 
-	//地址传递 会修饰实参
-	PrintStu2(&s);
-	cout << s.age << endl;
 	system("pause");
 	return 0;
 }
