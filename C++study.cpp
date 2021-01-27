@@ -26,42 +26,24 @@ using namespace std;
 */
 
 
-//在函数体外创建全局变量
-int g_a = 10;
-int g_b = 10;
+//程序运行后
+/*
+栈区：
+	由编译器自动分配释放，存放函数的参数值，局部变量等
+	注意：不需要返回局部变量的地址时，栈区开辟的数据由编译器自动释放
+*/
 
-//const修饰的全局变量，全局常量
-const int c_a = 10;
+int * func()
+{
+	int a = 10;//局部变量，存放在栈区，栈区的数据在函数执行完毕后自动释放
+	return &a;//返回局部变量的地址
+}
 
 int main()
 {
-	//创建普通的局部变量(函数体内的变量)
-	int a = 10;
-	int b = 10;
-	cout << "局部变量a的地址为：" << (int)&a << endl;
-	cout << "局部变量b的地址为：" << (int)&b << endl;
-
-	cout << "全局变量a的地址为：" << (int)&g_a << endl;
-	cout << "全局变量b的地址为：" << (int)&g_b << endl;
-
-	//静态变量 在普通变量的前面+static 
-	//也存放在全局区中
-	static int s_a = 10;
-	static int s_b = 10;
-	cout << "静态变量a的地址为：" << (int)&s_a << endl;
-	cout << "静态变量b的地址为：" << (int)&s_b << endl;
-
-	//常量
-	//字符串常量(存放在全局区)
-	cout << "字符串常量的地址为：" << (int)&"Hello World!" << endl;
-
-	//const修饰的常量
-	//const 修饰的全局变量
-	cout << "const修饰的全局常量地址为：" << (int)&c_a << endl;
-
-	//const修饰的局部变量
-	const int c2_a = 10;
-	cout << "const修饰的局部常量地址为：" << (int)&c2_a << endl;
+	int *p = func();
+	cout << *p << endl;//第一次可以打印正确的数字，因为编译器做了保留
+	cout << *p << endl;//第二次数据不再保留
 	system("pause");
 	return 0;
 }
