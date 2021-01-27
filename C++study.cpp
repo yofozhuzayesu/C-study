@@ -2,71 +2,66 @@
 #include<string>
 using namespace std;
 
-//案例2
+//内存分区模型
+
 /*
-  设计一个英雄的结构体：姓名 年龄 性别  共5名英雄
-  通过冒泡排序的方法，将数组中的英雄按照年龄进行升序排序，最终打印排序后的结果
- */
+1.代码区：存放函数体的二进制代码，由操作系统进行管理
+2.全局区：存放全局变量和静态变量以及常量
+3.栈区：由编译器自动分配释放，存放函数的参数值，局部变量
+4.堆区：由程序员分配和释放，若程序员不释放，程序结束时有操作系统回收
+*/
 
-//英雄结构体
-struct Hero
-{
-	string name;
-	int age;
-	string sex;
-};
+//内存四区意义：不同区域存放的数据，赋予不同的生命周期，给与我们更大的灵活编程
 
-//英雄赋值
-void allocate(Hero h[], int len)
-{
-	string NameSeed[5] = { "刘备","关羽","张飞","赵云","貂蝉" };
-	string SexSeed[5] = { "男","男","男","男","女" };
-	int a[5] = { 23,22,20,21,19 };
-	for (int i = 0; i < len; i++)
-	{
-		h[i].name = NameSeed[i];
-		h[i].sex = SexSeed[i];
-		h[i].age = a[i];
-	}
-}
+//程序运行前
+/*
+在程序编译后，生成了exe可执行程序，未执行程序前分为两个区域
+代码区：存放CPU执行的机器指令
+		代码区是共享的。共享的目的是对于频繁被执行的程序，只需要在内存中有一份代码即可
+		代码区是只读的。使其只读的原因是防止程序意外的修改了它的指令
 
-//冒泡排序
-void BubbleSort( Hero h[], int len)
-{
-	for (int i = 0; i < len-1; i++)
-	{
-		for (int j = 0; j < len-i-1; j++)
-		{
-			//如果j下标的元素大于 j+1元素的年龄，就交换两个元素
-			if (h[j].age>h[j+1].age)
-			{
-				Hero temp = h[j];//结构体冒泡排序，交换的单元是结构体变量，而不是结构体变量中的一个组成部分
-				h[j] = h[j + 1];
-				h[j + 1] = temp;
-			}
-		}
-	}
-}
+全局区：存放全局变量和静态变量
+		全局区还包含了常量区，字符串常量和其他常量也存放在此
+		该区域的数据在程序结束后由操作系统释放
+*/
 
-void print(Hero h[], int len)
-{
-	for (int  i = 0; i < len; i++)
-	{
-		cout << h[i].name << "  " << h[i].age << "  " << h[i].sex << endl;
-	}
-}
+
+//在函数体外创建全局变量
+int g_a = 10;
+int g_b = 10;
+
+//const修饰的全局变量，全局常量
+const int c_a = 10;
 
 int main()
 {
-	Hero h1[5];//创建结构体变量
-	int length = sizeof(h1) / sizeof(h1[0]);//计算结构体数组长度
-	//结构体元素赋值
-	allocate(h1, length);
-	//冒泡排序
-	BubbleSort(h1,length);
-	//输出
-	print(h1, length);
+	//创建普通的局部变量(函数体内的变量)
+	int a = 10;
+	int b = 10;
+	cout << "局部变量a的地址为：" << (int)&a << endl;
+	cout << "局部变量b的地址为：" << (int)&b << endl;
 
+	cout << "全局变量a的地址为：" << (int)&g_a << endl;
+	cout << "全局变量b的地址为：" << (int)&g_b << endl;
+
+	//静态变量 在普通变量的前面+static 
+	//也存放在全局区中
+	static int s_a = 10;
+	static int s_b = 10;
+	cout << "静态变量a的地址为：" << (int)&s_a << endl;
+	cout << "静态变量b的地址为：" << (int)&s_b << endl;
+
+	//常量
+	//字符串常量(存放在全局区)
+	cout << "字符串常量的地址为：" << (int)&"Hello World!" << endl;
+
+	//const修饰的常量
+	//const 修饰的全局变量
+	cout << "const修饰的全局常量地址为：" << (int)&c_a << endl;
+
+	//const修饰的局部变量
+	const int c2_a = 10;
+	cout << "const修饰的局部常量地址为：" << (int)&c2_a << endl;
 	system("pause");
 	return 0;
 }
