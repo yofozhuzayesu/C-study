@@ -3,47 +3,40 @@
 using namespace std;
 
 
-//引用做函数参数
-//普通值传递时，实参无法修饰
-//利用引用的技术可以让形参修饰实参，简化指针操作
+//引用做函数的返回值
 
-//值传递
-void swap01(int a, int b)
+
+
+//1.不要返回局部变量的引用
+
+int& test01()//引用做返回值的函数定义方式
 {
-	int temp = a;
-	a = b;
-	b = temp;
+	int a = 10;//局部变量存放在四区中的栈区
+	return a;
 }
 
-//地址传递
-void swap02(int *p1,int *p2)
+int& test02()//引用做返回值的函数定义方式
 {
-	int temp = *p1;
-	*p1 = *p2;
-	*p2 = temp;
+	static int a = 10;//静态变量存放在全局区，在程序结束后释放
+	return a;
 }
 
-void swap03(int &a, int &b)
-{
-	int temp = a;
-	a = b;
-	b = temp;
-}
 int main()
 {
-	int a = 10;
-	int b = 20;
-	/*swap01(a, b);//值传递
-	cout << a << endl;
-	cout << b << endl;
+	//int &ref = test01();
+	//cout << ref << endl;//第一次编译器做了保存
+	//cout << ref << endl;//第二次局部变量的内存已经被释放
 
-	swap02(&a, &b);//地址传递
-	cout << a << endl;
-	cout << b << endl;*/
 
-	swap03(a, b);//引用传递
-	cout << a << endl;//实参发生改变
-	cout << b << endl;
+	int &ref2 = test02();
+	cout << ref2 << endl;//全局区的变量在程序结束后释放
+	cout << ref2 << endl;
+
+	test02() = 1000;//2.如果函数的返回值是引用，则函数的调用可以作为左值,返回的是一个变量a,给a赋值1000
+	cout << ref2 << endl;//ref2作为a的别名，值也是1000
+	cout << ref2 << endl;
+
+
 	system("pause");
 	return 0;
 }
