@@ -2,41 +2,24 @@
 #include<string>
 using namespace std;
 
+//引用的本质：在C++内部实现是一个指针常量
 
-//引用做函数的返回值
-
-
-
-//1.不要返回局部变量的引用
-
-int& test01()//引用做返回值的函数定义方式
+void func(int& ref)//发现是引用，转换为int *const ref = &a
 {
-	int a = 10;//局部变量存放在四区中的栈区
-	return a;
+	ref = 100;//ref是引用，转换为*ref = 100;
 }
-
-int& test02()//引用做返回值的函数定义方式
-{
-	static int a = 10;//静态变量存放在全局区，在程序结束后释放
-	return a;
-}
-
 int main()
 {
-	//int &ref = test01();
-	//cout << ref << endl;//第一次编译器做了保存
-	//cout << ref << endl;//第二次局部变量的内存已经被释放
+	int a = 10;
+	/*int& ref = a;//自动转化为int *const ref = &a,指针常量：指向不可以更改，也就是说明引用为什么不可以更改
+	ref = 20;//内部发现ref是引用，自动帮我们转换为：*ref = 20
 
-
-	int &ref2 = test02();
-	cout << ref2 << endl;//全局区的变量在程序结束后释放
-	cout << ref2 << endl;
-
-	test02() = 1000;//2.如果函数的返回值是引用，则函数的调用可以作为左值,返回的是一个变量a,给a赋值1000
-	cout << ref2 << endl;//ref2作为a的别名，值也是1000
-	cout << ref2 << endl;
-
-
+	cout << "a=" << a << endl;
+	cout << "ref=" << ref << endl;//只要碰到引用，就会自动做解引用的操作*/
+	
+	func(a);
+	cout << "a=" << a << endl;
+	//cout << "ref=" << ref << endl;
 	system("pause");
 	return 0;
 }
