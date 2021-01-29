@@ -2,45 +2,23 @@
 #include<string>
 using namespace std;
 
-//new的基本语法
 
-int * func()
-{
-	//在堆区创建整形数据
-	//new返回的是该数据类型的指针
-	int *p = new int(10);//小括号
-	return p;
-}
-void test01()//在堆区开辟数据
-{
-	int *p = func();
-	cout << *p << endl;
-	cout << *p << endl;
-	cout << *p << endl;
-	//堆区的数据由程序员管理开辟，程序员管理释放
-	//如果想释放堆区的数据，利用关键字delete
-	delete p;
-	//cout << *p << endl;//内存已经被释放，再次访问就是非法操作，会报错
-}
+//引用
+//作用：给变量起别名
+//语法：数据类型 &别名 = 原名
 
-void test02()//在堆区开辟数组
-{
-	//创建10整形数据的数组
-	int * arr = new int[10];//注意是中括号，10代表的数组内有10个元素,返回数组的首地址
-	for (int i = 0; i < 10; i++)
-	{
-		arr[i] = i + 100;
-	}
-	for (int i = 0; i < 10; i++)
-	{
-		cout << arr[i] << endl;
-	}
-	delete[] arr;//释放数组的时候，要加中括号才可以
-}
+//引用注意事项
+//引用必须初始化
+//引用在初始化后，不可以改变
 int main()
 {
-	test01();
-	test02();
+	int a = 20;
+	int c = 10;
+	int &b = a;//引用初始化，不能写int &b;
+	//int &b = c;引用初始化之后，不可以改变
+	b = 20;
+	cout << a << endl;
+	cout << b << endl;
 	system("pause");
 	return 0;
 }
