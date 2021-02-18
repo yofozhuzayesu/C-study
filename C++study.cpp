@@ -37,13 +37,53 @@ public:
 
 };
 
+//学生类
+class Student
+{
+public:
+	//类中的属性和行为，统称为成员
+	//属性  也称 成员属性 or 成员方法
+	//行为  也称 成员函数 or 成员方法
+
+	string name;
+	int id;
+
+	//行为
+	void show()
+	{
+		cout << "学生姓名为：" << name << endl;
+		cout << "学生学号为：" << id << endl;
+	}
+
+	//给姓名赋值
+	void setName(string s_name)
+	{
+		name = s_name;
+	}
+
+	//给学号赋值
+	void setID(int s_id)
+	{
+		id = s_id;
+	}
+private:
+
+};
+
 
 int main()
 {
-	//通过圆类 创建具体的圆,即实例化
-	Circle c1;
-	c1.M_r = 10;
-	cout << "圆的周长=" << c1.calculateZC() << endl;
+	////通过圆类 创建具体的圆,即实例化
+	//Circle c1;
+	//c1.M_r = 10;
+	//cout << "圆的周长=" << c1.calculateZC() << endl;
+
+	Student s1;
+	//给S1对象 进行属性赋值操作
+	s1.setName("张三");
+	s1.setID(468751);
+	s1.show();
+
 	system("pause");
 	return 0;
 }
