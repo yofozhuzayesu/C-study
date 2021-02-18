@@ -2,36 +2,48 @@
 #include<string>
 using namespace std;
 
-//函数重载的注意事项
-//1.引用作为重载的条件
-void func(int &a)
-{
-	cout << "func(int &a)的调用" << endl;
 
-}
-void func(const int &a)
-{
-	cout << "func(const int &a)的调用" << endl;
+//C++面向对象三大特性：封装，继承，多态
+/*
+C++认为万物都皆为对象，对象上有其属性和行为
+例如人可以作为对象，属性有姓名、年龄、身高、体重，行为有走，跑，跳吃饭等
+车也可以作为对象，属性有轮胎，方向盘，车灯，行为有载人，放音乐等
+具有相同性质的对象，我们可以抽象称为类，人属于人类，车属于车类
+*/
 
-}
-//2.函数重载碰到默认参数
-void func2(int a,int b = 10)
+/*
+封装的意义：1.将属性和行为作为一个整体来表现生活中的事物
+			2.将属性和行为加以权限控制
+语法：class 类名{访问权限：属性 / 行为 }
+*/
+
+//设计一个圆类，求圆的周长 2 * PI * 半径
+const double PI = 3.14;
+class Circle
 {
-	cout << "func2(int a,int b = 10 )的调用" << endl;
-}
-void func2(int a)
-{
-	cout << "func2(int a )的调用" << endl;
-}
+	//访问权限
+	//公共权限
+public:
+	//属性
+	//半径
+	int M_r;
+
+	//行为
+	//获取圆的周长
+	double calculateZC()
+	{
+		return 2 * PI * M_r;
+	}
+
+};
+
 
 int main()
 {
-	//int a = 10;
-	//func(a);//调用函数1，原因是a是变量是可读可写状态，所以调用的是第一个函数
-	//func(10);//10的传递方式：相当于const int &a = 10,编译器自动分配一个临时空间存放a，用1的话是int &a = 10不合法
-
-	//func2(10);//当函数重载碰到默认参数，会出现二义性报错，应该尽量避免这种情况
-
+	//通过圆类 创建具体的圆,即实例化
+	Circle c1;
+	c1.M_r = 10;
+	cout << "圆的周长=" << c1.calculateZC() << endl;
 	system("pause");
 	return 0;
 }
