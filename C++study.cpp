@@ -2,43 +2,28 @@
 #include<string>
 using namespace std;
 
-//封装意义二
+//struct 和 class 的区别：默认的访问权限不同
 /*
-访问权限 ：
-1. public 公有权限  成员 类内可以访问  类外也可以访问
-2. procted 保护权限 成员 类内可以访问  类外不可以访问  儿子也可以访问父亲中的保护内容
-3. private 私有权限 成员 类内可以访问  类外不可以访问
+1.struct默认权限为公共
+2.class默认权限为私有
 */
 
-class Person
+class C1
 {
-public:
-	//公共权限
-	string name;
-protected:
-	//保护权限
-	string car;
-private:
-	//私有权限
-	int passwords;
+	int m_a;//不标注是public还是private 默认权限是私有
 
-
-public:
-	void func()
-	{
-		name = "张三";
-		car = "拖拉机";
-		passwords = 463545;
-	}
 };
 
-
+struct C2
+{
+	int m_b;//默认权限是公共权限
+};
 int main()
 {
-	Person p1;
-	p1.name = "李四";
-	//p1.car = "奔驰"；保护权限的内容类外不可以访问
-	//p1.passwords = 48645; 私有权限的内容类外不可以访问
+	C1 c1;
+	//c1.m_a = 100; 私有权限无法访问 
+	C2 c2;
+	c2.m_b = 100;//公共权限可以访问 
 	system("pause");
 	return 0;
 }
