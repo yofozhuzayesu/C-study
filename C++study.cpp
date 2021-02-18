@@ -2,80 +2,50 @@
 #include<string>
 using namespace std;
 
-//设计一个圆形类，一个点类，计算点和圆的关系
-class cirlce
-{
-public:
-	void setXYR(int a,int b,int c)//设置圆心的坐标和半径
-	{
-		x = a;
-		y = b;
-		r = c;
-	}
-	int getX()
-	{
-		return x;
-	}
-	int getY()
-	{
-		return y;
-	}
-	int getR()
-	{
-		return r;
-	}
-private:
-	int x;//横坐标
-	int y;//纵坐标	
-	int r;//半径
-};
-class point
-{
-public:
-	void setXY(int a, int b)//设置点的坐标
-	{
-		x = a;
-		y = b;
-	}
-	int getX()
-	{
-		return x;
-	}
-	int getY()
-	{
-		return y;
-	}
-private:
-	int x;
-	int y;
-};
+//对象的初始化和清理
+//构造函数和析构函数 一个是初始化 一个是清理
+//这两个函数是由编译器自动调用
+/*
+构造函数语法： 类名（）｛｝
+1.没有返回值也不写void
+2.函数名称与类名相同
+3.构造函数可以有参数，因此可以发生重载
+4.程序在调用对象的时候会自动调用构造，无须手动调用，且只会调用一次
+*/
 
-int relation(cirlce &c, point &p)
+/*
+析构函数~类名（）｛｝
+1.没有返回值也不写void
+2.函数名称与类名相同，在名词前加上符号~
+3.析构函数不可以有参数，因此不可以发生重载
+4.程序在对象销毁前会自动调用析构，无需手动调用，而且只会调用一次
+*/
+
+class person
 {
-	int d = (c.getX() - p.getX())*(c.getX() - p.getX()) + (c.getY() - p.getY())*(c.getY() - p.getY());
-	return d;
+public:
+	person()
+	{
+		cout << "调用构造函数" << endl;
+	}
+
+	~person()
+	{
+		cout << "调用析构函数" << endl;
+	}
+
+};
+//构造函数和析构函数的实现
+
+void test01()
+{
+	person p1;//变量创建在栈区，函数调用结束后会自动释放
 }
+
 int main()
 {
-	cirlce c1;
-	point p1;
-	c1.setXYR(0, 0, 5);
-	p1.setXY(3,4);
-	int d = relation(c1, p1);
-	if (d>(c1.getR()*c1.getR()))
-	{
-		cout << "点在圆外" << endl;
-	}
-	else if (d == (c1.getR()*c1.getR()))
-	{
-		cout << "点在圆上" << endl;
-	}
-	else
-	{
-		cout << "点在圆内" << endl;
-	}
-
+	person p1;//不会调用析构函数，因为下一行执行pause语句时会暂停，变量并未释放
+	//test01();//会调用析构函数
 	system("pause");
 	return 0;
 }
-
