@@ -11,35 +11,63 @@ using namespace std;
 //2.类做友元
 //3.成员函数做友元
 
-//1.全局函数做友元
+//2.类做友元
 class Building
 {
-	//利用关键字 friend 使得全局函数成为友元，可以访问私有属性
-	friend void goodGay(Building &building);
+	friend class GoodGay; //将GoodGay类 设置成Building类的友元 可以访问本类中的私有成员
 public:
-	Building()
-	{
-		m_SittingRoom = "客厅";
-		m_BedRoom = "卧室";
-	}
-	string m_SittingRoom;//客厅
-
+	Building();
+	~Building();
+	string m_sittingroom;
 private:
-	string m_BedRoom;//卧室
+	string m_bedroom;
 };
 
-//全局函数
-void goodGay(Building &building)
+Building::Building()//类外写构造函数的方法
 {
-	cout << "好基友的全局函数正在访问" << building.m_SittingRoom << endl;
-	cout << "好基友的全局函数正在访问" << building.m_BedRoom << endl;//成为友元后即可访问
+	m_sittingroom = "客厅";
+	m_bedroom = "卧室";
 }
 
+Building::~Building()
+{
+}
 
+class GoodGay
+{
+public:
+	GoodGay();
+	~GoodGay();
+	Building *building;
+	void visit();
+private:
+
+};
+
+GoodGay::GoodGay()
+{
+	//创建一个建筑物的对象
+	building = new Building;//让指针building  指向在堆区新创建出来的Building类型的对象
+}
+
+GoodGay::~GoodGay()
+{
+}
+
+void GoodGay::visit()//类外写成员函数
+{
+	cout << "好基友类正在访问" << building->m_sittingroom << endl;//访问公共属性
+	cout << "好基友类正在访问" << building->m_bedroom << endl;//访问私有属性
+}
+
+void test()
+{
+	GoodGay g;
+	g.visit();
+}
 int main()
 {
-	Building b;
-	goodGay(b);
+	test();
 	system("pause");
 	return 0;
 }
