@@ -2,60 +2,44 @@
 #include<string>
 using namespace std;
 
-//const修饰成员函数
-//成员函数后面const后我们称该函数为常函数
-//常函数内部可以修改成员属性
-//成员属性声明时加mutable后，在常函数中依然可以修改
+//在程序里，有些私有属性也想让类外特殊的一些函数或者类进行访问，就需要用到友元的技术
+//友元的目的就是让一个函数或者类访问另一类中的私有成员
+//友元的关键字是 frined
 
-//常对象
-//声明对象前加const称该对象为常对象
-//常对象只能调用常函数
+//友元三种实现
+//1.全局函数做友元
+//2.类做友元
+//3.成员函数做友元
 
-class person
+//1.全局函数做友元
+class Building
 {
+	//利用关键字 friend 使得全局函数成为友元，可以访问私有属性
+	friend void goodGay(Building &building);
 public:
-	
-	//this 指针 本质是一个指针常量 (person * const this)，指向不可修改
-	//每个类成员函数都有个this指针，函数后面加const  this指针就变成 const person * const p，指针的值也不可修改
-	void showPerson() const 
+	Building()
 	{
-		//m_a = 100;  //本质就是this->m_a = 100;   不可修改
-		this->m_b = 100;
-		cout << this->m_b << endl;
+		m_SittingRoom = "客厅";
+		m_BedRoom = "卧室";
 	}
-	void func()
-	{
+	string m_SittingRoom;//客厅
 
-	}
-	int m_a;
-	mutable int m_b;//特殊变量，即使在常函数中，也可以修改这个值
+private:
+	string m_BedRoom;//卧室
 };
 
-//常函数
-void test01()
+//全局函数
+void goodGay(Building &building)
 {
-	person p;
-	p.showPerson();
+	cout << "好基友的全局函数正在访问" << building.m_SittingRoom << endl;
+	cout << "好基友的全局函数正在访问" << building.m_BedRoom << endl;//成为友元后即可访问
 }
 
-//常对象
-void test02()
-{
-	const person p;//在对象前+const，变为常对象，不可修改
-	//p.m_a = 100;  报错 常对象中的属性值不可修改
-	p.m_b = 16;//特殊值在常对象中也可以修改
-	cout << p.m_b << endl;
-
-	//常对象只能调用常函数
-	p.showPerson();
-	//p.func(); //常对象不可调用普通成员函数，因为普通成员函数可以修改成员属性
-
-}
 
 int main()
 {
-	//test01();
-	test02();
+	Building b;
+	goodGay(b);
 	system("pause");
 	return 0;
 }
