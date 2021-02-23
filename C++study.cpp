@@ -11,63 +11,53 @@ using namespace std;
 //2.类做友元
 //3.成员函数做友元
 
-//2.类做友元
-class Building
-{
-	friend class GoodGay; //将GoodGay类 设置成Building类的友元 可以访问本类中的私有成员
-public:
-	Building();
-	~Building();
-	string m_sittingroom;
-private:
-	string m_bedroom;
-};
-
-Building::Building()//类外写构造函数的方法
-{
-	m_sittingroom = "客厅";
-	m_bedroom = "卧室";
-}
-
-Building::~Building()
-{
-}
-
+//成员函数做友元
+class Building;//如果类B使用类A，要么按顺序，要么先声明
 class GoodGay
 {
 public:
 	GoodGay();
-	~GoodGay();
-	Building *building;
-	void visit();
-private:
-
+	void visit();//让visit函数可以访问私有属性
+	void visit2();//visit2函数不可以访问私有属性
+	Building *b;
 };
-
+class Building
+{
+	//表示GoodGay类下的visit成员函数作为本类的友元
+	friend void GoodGay::visit();
+public:
+	Building();
+	string m_sittingroom;//客厅	
+private:
+	string m_bedroom;//卧室
+};
 GoodGay::GoodGay()
 {
-	//创建一个建筑物的对象
-	building = new Building;//让指针building  指向在堆区新创建出来的Building类型的对象
+	b = new Building;//创建Building类型的数据，需要放在Building类定义之后，不然编译器不清楚创建的类的内存大小
 }
-
-GoodGay::~GoodGay()
+Building::Building()
 {
+	m_sittingroom = "客厅";
+	m_bedroom = "卧室";
 }
-
-void GoodGay::visit()//类外写成员函数
+void GoodGay::visit()
 {
-	cout << "好基友类正在访问" << building->m_sittingroom << endl;//访问公共属性
-	cout << "好基友类正在访问" << building->m_bedroom << endl;//访问私有属性
+	cout << "好基友类中的visit函数正在访问" << b->m_sittingroom << endl;
+	cout << "好基友类中的visit函数正在访问" << b->m_bedroom << endl;
 }
-
-void test()
+void GoodGay::visit2()
+{
+	cout << "好基友类中的visit函数正在访问" << b->m_sittingroom << endl;
+}
+void test01()
 {
 	GoodGay g;
 	g.visit();
+	g.visit2();
 }
 int main()
 {
-	test();
+	test01();
 	system("pause");
 	return 0;
 }
