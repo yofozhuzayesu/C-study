@@ -2,162 +2,102 @@
 #include<string>
 using namespace std;
 
-//继承——面向对象的三大特性之一
-//例如类与类之间存在特殊的关系，比如动物中有猫科动物，猫科动物又有老虎豹子等
-//定义这些类的时候，下级别的成员除了拥有上一级的共性，还有自己的特性
-//利用继承的技术就能减少重复代码
+//继承方式
+//继承方式：
+//        公共继承：能分别继承public和protected           无法访问父类private
+//        保护继承：public和protected全部继承为 protected 无法访问父类private
+//        私有继承：public和protected全部继承为 private   无法访问父类private
 
-//example  很多网站有公共的头部、底部甚至公共得到左侧列表，只有中心内容不同
-//利用普通写法和继承的写法来实现网页中的内容，看看继承存在的意义以及好处
-
-//普通实现
-//JAVA页面
-//class JAVA
-//{
-//public:
-//	void header()
-//	{
-//		cout << "首页、公开课、登录、注册（公共头部）" << endl;
-//	}
-//	void footer()
-//	{
-//		cout << "帮助中心、交流合作、站内地图（公共底部）" << endl;
-//	}
-//	void left()
-//	{
-//		cout << "JAVA PYTHON C++（公共分类列表）" << endl;
-//	}
-//	void content()
-//	{
-//		cout << "JAVA学科视频" << endl;
-//	}
-//};
-//
-//class PYTHON
-//{
-//public:
-//	void header()
-//	{
-//		cout << "首页、公开课、登录、注册（公共头部）" << endl;
-//	}
-//	void footer()
-//	{
-//		cout << "帮助中心、交流合作、站内地图（公共底部）" << endl;
-//	}
-//	void left()
-//	{
-//		cout << "JAVA PYTHON C++（公共分类列表）" << endl;
-//	}
-//	void content()
-//	{
-//		cout << "PYTHON学科视频" << endl;
-//	}
-//};
-//
-//
-//class cpp
-//{
-//public:
-//	void header()
-//	{
-//		cout << "首页、公开课、登录、注册（公共头部）" << endl;
-//	}
-//	void footer()
-//	{
-//		cout << "帮助中心、交流合作、站内地图（公共底部）" << endl;
-//	}
-//	void left()
-//	{
-//		cout << "JAVA PYTHON C++（公共分类列表）" << endl;
-//	}
-//	void content()
-//	{
-//		cout << "C++学科视频" << endl;
-//	}
-//};
-//
-//
-
-
-//继承写法
-//好处：减少重复的代码
-//语法：class 子类 : 继承方式 父类
-//子类也称为派生类 父类也称为基类
-//公共元素
-class BasePage
+//公共继承
+class base1
 {
 public:
-	void header()
-	{
-		cout << "首页、公开课、登录、注册（公共头部）" << endl;
-	}
-	void footer()
-	{
-		cout << "帮助中心、交流合作、站内地图（公共底部）" << endl;
-	}
-	void left()
-	{
-		cout << "JAVA PYTHON C++（公共分类列表）" << endl;
-	}
-};
-//JAVA类 继承Base
-class JAVA :public BasePage
-{
-public:
-	void content()
-	{
-		cout << "JAVA学科视频" << endl;
-	}
-};
-//C++类
-class cpp :public BasePage
-{
-public:
-	void content()
-	{
-		cout << "C++学科视频" << endl;
-	}
-};
-//PYTHON类 
-class PYTHON :public BasePage
-{
-public:
-	void content()
-	{
-		cout << "PYTHON学科视频" << endl;
-	}
+	int m_a;
+protected:
+	int m_b;
+private:
+	int m_c;
 };
 
+class son1 :public base1
+{
+public:
+	void func()
+	{
+		m_a = 10;//父类中的公共权限成员 到子类中依然是公共权限
+		m_b = 10;//父类中的保护权限成员 到子类中依然是保护权限
+		//m_c = 10;// 父类的私有权限成员 子类无法访问
+	}
+};
 void test01()
 {
-	cout << "JAVA下载页面如下" << endl;
-	JAVA j;
-	j.header();
-	j.left();
-	j.footer();
-	j.content();
-	cout << "---------------------------" << endl;
-
-	cout << "PYTHON下载页面如下" << endl;
-	PYTHON p;
-	p.header();
-	p.left();
-	p.footer();
-	p.content();
-	cout << "---------------------------" << endl;
-
-	cout << "C++下载页面如下" << endl;
-	cpp c;
-	c.header();
-	c.left();
-	c.footer();
-	c.content();
-	cout << "---------------------------" << endl;
+	son1 s1;
+	s1.m_a = 100;
+	//s1.m_b = 100; //保护权限类外访问不到
 }
 
+//保护继承
+class base2
+{
+public:
+	int m_a;
+protected:
+	int m_b;
+private:
+	int m_c;
+};
+
+class son2 :protected base2
+{
+public:
+	void func()
+	{
+		m_a = 100;//父类中公共成员，到子类中变为保护权限
+		m_b = 100;//父类中保护成员，到子类中变为保护权限
+		//m_c = 100;  //父类私有成员不可访问
+	}
+};
+void test02()
+{
+	son2 s2;
+	//继承的m_a m_b全部变成保护权限，类外不可访问
+	/*s2.m_a = 100;
+	s2.m_b = 100;*/  
+}
+
+//私有继承
+class base3
+{
+public:
+	int m_a;
+protected:
+	int m_b;
+private:
+	int m_c;
+};
+class son3 :private base3
+{
+public:
+	void func()
+	{
+		//父类中公共成员和保护成员全部变成私有成员
+		m_a = 100;
+		m_b = 100;
+		//m_c = 100; //父类私有成员不可访问
+	}
+};
+class son3test : private son3
+{
+public:
+	void func()
+	{
+		//m_a = 100;//可证明son3中继承的属性已变成私有成员
+
+	}
+};
 int main()
 {
-	test01();
+
 	system("pause");
 	return 0;
 }
