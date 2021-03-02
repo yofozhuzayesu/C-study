@@ -2,73 +2,71 @@
 #include<string>
 using namespace std;
 
-//递增运算符重载 ++
-//通过重载递增运算符，实现自己的整形数据
+//赋值运算符重载
+//C++编译器至少给一个类添加4个函数
+//1.默认构造函数（无参，函数体为空）
+//2.默认析构函数（无惨，函数体为空）
+//3.默认拷贝构造函数，对属性进行值拷贝
+//4.赋值运算符operator=，对属性进行值拷贝
 
-//自定义整形变量
-class MyInteger
+//如果类中有属性指向堆区，做赋值操作也会出现深浅拷贝问题
+
+class person
 {
-	friend ostream & operator<<(ostream &cout, MyInteger m_int);
 public:
-	MyInteger()
+	person(int age)
 	{
-		m_num = 0;
+		m_age = new int(age);//在堆区开辟一个数据，并返回该数据的指针
 	}
-	//重载++运算符
-	//重载前置++运算符
-	MyInteger & operator++() //返回引用是为了对同一个对象进行递增操作
-		                   //若不返回引用，返回一个新对象，则每次调用的时候输出都是1
+	int *m_age;
+
+	~person()//堆区的数据要手动释放 在析构函数中释放
+			   //若不重载=号，P2=P1后，两个对象的*m_age指针都指向堆区同一块数据，会导致重复释放引发出错
+			   //解决方案，利用深拷贝解决浅拷贝带来的问题
 	{
-		//先进行++运算
-		m_num++;
-		//再将自身做返回
+		if (m_age !=NULL)
+		{
+			delete m_age;
+			m_age = NULL;
+		}
+	}
+
+
+	//重载赋值运算符
+	person & operator=(person &p)//形参必须得用引用的方式，不然该函数执行完毕后，实参会释放，导致后面二次释放出错
+								 //返回值类型也需要用引用的方式，不用引用的话直接返回值，会复制一个新的对象
+	{
+		//编译器是提供浅拷贝
+		//m_age = p.m_age;
+
+		//应该先判断是否有属性在堆区，如果有则先释放，再深拷贝
+		if (this->m_age!=NULL)
+		{
+			delete this->m_age;
+			this->m_age = NULL;
+		}
+		//深拷贝操作
+		this->m_age = new int(*p.m_age);
+		//返回对象自身
 		return *this;
 	}
 
-	//重载后置++运算符
-	//MyInteger& operator++() 与上一个函数重载了，但是返回值类型并不能作用于重载的条件
-	//MyInteger& operator++(int) int代表占位参数，可以用于区分前置和后置递增，只能用int
-	MyInteger operator++(int)
-	{
-		//先记录下当时的结果
-		MyInteger temp = *this;
-		//后递增
-		this->m_num++;
-		//最后将记录结果做返回
-		return temp;
-		//后置递增一定是返回值，因为局部对象在函数结束后就被释放了，返回引用的话就是非法操作
-	}
-private:
-	int m_num;
 };
 
-//全局函数重载左移运算符
-ostream & operator<<(ostream & cout, MyInteger myint )
-{
-	cout << myint.m_num;
-	return cout;
-}
+
 void test01()
 {
-	MyInteger m;
-	cout << ++(++m) << endl;
-	cout << m << endl;
-}
-
-void test02()
-{
-	MyInteger m;
-	cout << m++ << endl;
-	cout << m << endl;
+	person p1(18);
+	person p2(20);
+	person p3(30);
+	p3 = p2 = p1;
+	cout << *p1.m_age << endl;
+	cout << *p2.m_age << endl;
+	cout << *p2.m_age << endl;
 }
 int main()
 {
-	//int a = 10;
-	//cout << (a++)++ << endl; //非法操作 因为a++是一个常量，不能再执行运算
-
-
-	//test01();
-	test02();
+	test01();
 	system("pause");
 	return 0;
 }
