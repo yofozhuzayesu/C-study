@@ -2,46 +2,73 @@
 #include<string>
 using namespace std;
 
-//左移运算符重载 <<
+//递增运算符重载 ++
+//通过重载递增运算符，实现自己的整形数据
 
-class person
+//自定义整形变量
+class MyInteger
 {
+	friend ostream & operator<<(ostream &cout, MyInteger m_int);
 public:
-	int m_a;
-	int m_b;
-	//利用成员函数重载左移运算符 p.operator<<(cout)  简化版本 p<<cout
-	//通常不会成员函数重载左移运算符  因为无法实现cout在左侧
-	/*void operator<<(cout)
+	MyInteger()
 	{
-		
-		
-	}*/
+		m_num = 0;
+	}
+	//重载++运算符
+	//重载前置++运算符
+	MyInteger & operator++() //返回引用是为了对同一个对象进行递增操作
+		                   //若不返回引用，返回一个新对象，则每次调用的时候输出都是1
+	{
+		//先进行++运算
+		m_num++;
+		//再将自身做返回
+		return *this;
+	}
+
+	//重载后置++运算符
+	//MyInteger& operator++() 与上一个函数重载了，但是返回值类型并不能作用于重载的条件
+	//MyInteger& operator++(int) int代表占位参数，可以用于区分前置和后置递增，只能用int
+	MyInteger operator++(int)
+	{
+		//先记录下当时的结果
+		MyInteger temp = *this;
+		//后递增
+		this->m_num++;
+		//最后将记录结果做返回
+		return temp;
+		//后置递增一定是返回值，因为局部对象在函数结束后就被释放了，返回引用的话就是非法操作
+	}
+private:
+	int m_num;
 };
 
-//只能利用全局函数重载左移运算符
-//cout属于输出流对象
-ostream & operator<<(ostream &cout,person p) //本质是operator<<(cout,p)  简化成cout<<p
+//全局函数重载左移运算符
+ostream & operator<<(ostream & cout, MyInteger myint )
 {
-	cout << p.m_a << endl;
-	cout << p.m_b << endl;
+	cout << myint.m_num;
 	return cout;
 }
 void test01()
 {
-	person p;
-	p.m_a = 10;
-	p.m_b = 20;
-	//cout << p << endl;
-	//链式编程思想
-	//正常情况下，cout有返回值，可以继续追加对象，但是目前定义的是无返回值
-	//修改方式是将重载函数改成有返回值的，返回的对象类型为ostream
-	cout << p << "Hello world" << endl;
+	MyInteger m;
+	cout << ++(++m) << endl;
+	cout << m << endl;
 }
 
-
+void test02()
+{
+	MyInteger m;
+	cout << m++ << endl;
+	cout << m << endl;
+}
 int main()
 {
-	test01();
+	//int a = 10;
+	//cout << (a++)++ << endl; //非法操作 因为a++是一个常量，不能再执行运算
+
+
+	//test01();
+	test02();
 	system("pause");
 	return 0;
 }
