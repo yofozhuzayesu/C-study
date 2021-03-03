@@ -2,45 +2,67 @@
 #include<string>
 using namespace std;
 
-//继承中构造和析构顺序
-//子类继承父类后，当创建子类对象，也会调用父类的构造函数
-//问题：父类和子类的构造和析构顺序是谁先谁后
+//继承中同名的处理方式
+//当子类与父类出现同名的成员，如何通过子类对象，访问到子类或父类中同名的数据呢？
 
-class Base
+//访问子类同名成员，直接访问即可
+//访问父类同类成员，需要加作用域
+
+class base
 {
 public:
-	Base()
+	base()
 	{
-		cout << "Base的构造函数" << endl;
+		m_a = 100;
 	}
-
-	~Base()
+	void func()
 	{
-		cout << "Base的析构函数" << endl;
+		cout << "这是Base类下的测试函数" << endl;
 	}
+	int m_a;
 };
 
-class son : public Base
+class son : public base
 {
 public:
 	son()
 	{
-		cout << "son的构造函数" << endl;
+		m_a = 200;
 	}
 
-	~son()
+	void func()
 	{
-		cout << "son的析构函数" << endl;
+		cout << "这是son类下的测试函数" << endl;
 	}
+	int m_a;
 };
+
+//同名成员属性处理方式
 void test01()
 {
-	//Base b;
 	son s;
+	cout << s.m_a << endl;//访问子类的同名成员
+
+	//如果通过子类访问父类同类成员，需要加作用域
+	cout << s.base::m_a << endl;//访问从父类中继承下来的同名成员
+	
 }
+
+void test02()
+{
+	son s;
+	s.func();//出现同名的成员函数时，直接调用，调用的是子类中的同名成员
+
+	s.base::func();//访问父类，要加作用域
+}
+
+//如果子类中出现和父类同名的成员函数，子类的同名成员会隐藏掉父类中所有的同名成员函数（也就是父类中同名重载的函数）
+//如果想访问父类中被隐藏的同名成员函数，需要加作用域
+
 int main()
 {
-	test01();
+	//test01();
+	test02();
 	system("pause");
 	return 0;
 }
