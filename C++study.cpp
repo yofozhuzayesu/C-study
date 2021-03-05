@@ -28,7 +28,7 @@ class cat : public animal
 {
 public:
 	//函数重写 ：返回值 函数名 参数列表 完全相同
-	//重写的函数 可加virtual可不加
+	//派生类重写的函数 可加virtual可不加
 	void speak()
 	{
 		cout << "小猫在说话" << endl;
@@ -57,7 +57,7 @@ public:
 //父类的指针或者引用，但是执行子类对象
 
 
-void doSpeak(animal &Animal)//animal类的引用  = cat类
+void doSpeak(animal &Animal)//animal类的引用  animal & Animal = cat
 {
 	Animal.speak();
 }
@@ -72,10 +72,25 @@ void test01()
 	doSpeak(d);
 }
 
+void test02()
+{
+	cout << "sizeof(animal)=" << sizeof(animal) << endl;
+	//不加virtual时 函数不属于类的对象上面，因此输出1
 
+	//加了virtual 输出4  因为animal类内部是个4字节的指针vfptr-虚函数（表）指针
+	//该指针指向一个虚函数表vftable 表内部记录一个虚函数animal::speak的地址
+
+	//若子类没发生函数重写，则直接继承animal::speak，也继承父类的虚函数表
+	
+	//若子类重写了父类的虚函数，子类的虚函数内部会替换成子类的虚函数地址
+	//子类虚函数表中 变成记录 cat::speak的地址
+	//当父类的指针或者引用指向子类对象时候，发生多态
+	//传入cat类，则从虚函数走cat函数的地址
+}
 int main()
 {
-	test01();
+	//test01();
+	test02();
 	system("pause");
 	return 0;
 }
