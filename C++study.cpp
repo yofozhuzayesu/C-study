@@ -2,56 +2,77 @@
 #include<string>
 using namespace std;
 
-//菱形继承：有两个派生类继承同一个基类  又有某个类同时继承这两个派生类  这就是菱形继承 也叫钻石继承
+//多态是C++面向对象三大特性之一
+//多态分为两类
+//静态多态：函数重载和运算符重载属于静态多态，复用函数名
+//动态多态：派生类和虚函数实现运行时多态
+
+//静态多态和动态多态的区别
+//静态多态的函数地址早绑定，编译阶段确定函数地址
+//动态多态的函数地址晚绑定，运行阶段确定函数地址
 
 //动物类
 class animal
 {
 public:
-	int m_age;
-
+	//虚函数
+	//函数地址无法提前确定，需要根据所传参数的类型来判定
+	virtual void speak()
+	{
+		cout << "动物在说话" << endl;
+	}
 };
-//羊类
-//在继承之前 加上关键字 virtual 变成虚继承
-//animal类称为虚基类
-class sheep:virtual public animal
+
+//猫类派生类
+class cat : public animal
 {
+public:
+	//函数重写 ：返回值 函数名 参数列表 完全相同
+	//重写的函数 可加virtual可不加
+	void speak()
+	{
+		cout << "小猫在说话" << endl;
+	}
 
 };
-//驼类
-//在继承之前 加上关键字 virtual 变成虚继承
-//animal类称为虚基类
-class tuo:virtual public animal
+//狗类派生类
+class dog :public animal
 {
-
+public:
+	void speak()
+	{
+		cout << "小狗在说话" << endl;
+	}
 };
 
-//羊驼类
+//执行说话的函数
+//地址早绑定，在编译阶段就确定了函数地址
+//如果想执行让猫说话，那么这个函数地址就不能提前绑定，需要在运行阶段绑定，地址晚绑定
 
-class sheeptuo : public sheep, public tuo
+//动态多态的满足条件：
+//1.有继承关系
+//2.子类需要重写父类的虚函数
+
+//动态多态使用
+//父类的指针或者引用，但是执行子类对象
+
+
+void doSpeak(animal &Animal)//animal类的引用  = cat类
 {
-
-};
+	Animal.speak();
+}
 
 void test01()
 {
-	sheeptuo st;
-	//st.m_age = 18;  m_age出现二义性 无法明确
-	st.sheep::m_age = 18;
-	st.tuo::m_age = 28;
+	cat c;
+	//C++中允许父类和子类的自动转换，父类的引用或指针可以直接指向子类对象
+	doSpeak(c);//形参是animal类，实参是cat类
 
-	//第一个问题：当发生菱形继承时，两个父类拥有相同数据，需要加以作用域区分
-	//从羊类继承的m_age
-	cout << "st.sheep::m_age=" << st.sheep::m_age << endl;
-	//从驼类继承的m_age
-	cout << "st.tuo::m_age=" << st.tuo::m_age << endl;
-	//采用虚继承方式后
-	cout << "st.m_age=" << st.m_age << endl;
-
-	//但是m_age只需要一份即可，菱形继承导致数据有两份，资源浪费
-	//利用虚继承可以解决 菱形继承的问题
-	//利用虚继承 继承的是两个不同的虚基类指针以及一个变量m_age  而这个两个指针都指向同一份内存 也就是m_age变成唯一
+	dog d;
+	doSpeak(d);
 }
+
+
 int main()
 {
 	test01();
