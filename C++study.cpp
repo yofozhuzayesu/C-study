@@ -2,90 +2,133 @@
 #include<string>
 using namespace std;
 
-//多态是C++面向对象三大特性之一
-//多态分为两类
-//静态多态：函数重载和运算符重载属于静态多态，复用函数名
-//动态多态：派生类和虚函数实现运行时多态
+//多态案例-计算器类
+//案例描述：分别利用普通写法和多态技术，设计实现两个操作数进行运算的计算器类
 
-//静态多态和动态多态的区别
-//静态多态的函数地址早绑定，编译阶段确定函数地址
-//动态多态的函数地址晚绑定，运行阶段确定函数地址
+//多态的优点
+//代码组织结构清晰
+//可读性强
+//利于前期和后期的拓展以及维护
 
-//动物类
-class animal
+//普通写法
+class Calculator
 {
 public:
-	//虚函数
-	//函数地址无法提前确定，需要根据所传参数的类型来判定
-	virtual void speak()
+	int getResult(string oper) //传入结果是一个操作符，根据传入的操作符判断执行加减乘除
 	{
-		cout << "动物在说话" << endl;
+		//switch语句必须用整形或者枚举类型
+		//用if语句
+		if (oper == "+")
+		{
+			return m_num1 + m_num2;
+		}
+		else if (oper == "-")
+		{
+			return m_num1 - m_num2;
+		}
+		else if (oper =="*")
+		{
+			return m_num1 * m_num2;
+		}
+		else if (oper == "/")
+		{
+			return m_num1 / m_num2;
+		}
+		//如果需要拓展新的功能，则需要修改源码
+		//在真实的开发中，提倡 开闭原则
+		//开闭原则：对拓展进行开放，对修改进行关闭
+
 	}
+	int m_num1;
+	int m_num2;
+	
 };
-
-//猫类派生类
-class cat : public animal
-{
-public:
-	//函数重写 ：返回值 函数名 参数列表 完全相同
-	//派生类重写的函数 可加virtual可不加
-	void speak()
-	{
-		cout << "小猫在说话" << endl;
-	}
-
-};
-//狗类派生类
-class dog :public animal
-{
-public:
-	void speak()
-	{
-		cout << "小狗在说话" << endl;
-	}
-};
-
-//执行说话的函数
-//地址早绑定，在编译阶段就确定了函数地址
-//如果想执行让猫说话，那么这个函数地址就不能提前绑定，需要在运行阶段绑定，地址晚绑定
-
-//动态多态的满足条件：
-//1.有继承关系
-//2.子类需要重写父类的虚函数
-
-//动态多态使用
-//父类的指针或者引用，但是执行子类对象
-
-
-void doSpeak(animal &Animal)//animal类的引用  animal & Animal = cat
-{
-	Animal.speak();
-}
 
 void test01()
 {
-	cat c;
-	//C++中允许父类和子类的自动转换，父类的引用或指针可以直接指向子类对象
-	doSpeak(c);//形参是animal类，实参是cat类
-
-	dog d;
-	doSpeak(d);
+	Calculator c;
+	string option;
+	cout << "请输入两个数" << endl;
+	cin >> c.m_num1 >> c.m_num2;
+	cout << "请输入要执行的操作" << endl;
+	cin >> option;
+	int result = c.getResult(option);
+	cout << "结果为：" << result << endl;
 }
+
+//利用多态实现计算器
+//1.实现计算器抽象类
+class AbstractCalculator
+{
+public:
+	virtual int getR()
+	{
+		return 0;
+	}
+	int m_num1;
+	int m_num2;
+};
+
+//2.加法计算器类
+class addCalculator:public AbstractCalculator
+{
+public:
+	int getR()
+	{
+		return m_num1 + m_num2;
+	}
+};
+
+//2.减法计算器类
+class subCalculator :public AbstractCalculator
+{
+public:
+	int getR()
+	{
+		return m_num1 - m_num2;
+	}
+};
+
+//3.乘法计算器类
+class mulCalculator :public AbstractCalculator
+{
+public:
+	int getR()
+	{
+		return m_num1 * m_num2;
+	}
+};
+
+//4.除法计算器类
+class divCalculator :public AbstractCalculator
+{
+public:
+	int getR()
+	{
+		return m_num1 / m_num2;
+	}
+};
 
 void test02()
 {
-	cout << "sizeof(animal)=" << sizeof(animal) << endl;
-	//不加virtual时 函数不属于类的对象上面，因此输出1
+	//多态使用条件
+	//父类的指针或者引用指向子类对象
+	AbstractCalculator *abc = new addCalculator;//利用指针的方法
+	cout << "请输入要计算的两个数" << endl;
+	cin >> abc->m_num1 >> abc->m_num2;
+	cout << abc->m_num1 << "+" << abc->m_num2 << "=" << abc->getR() << endl;
+	//用完后记得销毁
+	delete abc;
+	abc = NULL;
 
-	//加了virtual 输出4  因为animal类内部是个4字节的指针vfptr-虚函数（表）指针
-	//该指针指向一个虚函数表vftable 表内部记录一个虚函数animal::speak的地址
-
-	//若子类没发生函数重写，则直接继承animal::speak，也继承父类的虚函数表
-	
-	//若子类重写了父类的虚函数，子类的虚函数内部会替换成子类的虚函数地址
-	//子类虚函数表中 变成记录 cat::speak的地址
-	//当父类的指针或者引用指向子类对象时候，发生多态
-	//传入cat类，则从虚函数走cat函数的地址
+	//减法运算
+	abc = new subCalculator;//销毁其实只是释放了堆区的数据，指针并没有销毁
+	cout << "请输入要计算的两个数" << endl;
+	cin >> abc->m_num1 >> abc->m_num2;
+	cout << abc->m_num1 << "-" << abc->m_num2 << "=" << abc->getR() << endl;
+	//用完后记得销毁
+	delete abc;
+	abc = NULL;
 }
 int main()
 {
