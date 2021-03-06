@@ -5,12 +5,11 @@ using namespace std;
 //二进制文件
 //打开方式指定为 ios:binary
 
-//写文件
-//二进制方式写文件主要利用流对象调用成员函数write
-//函数原型:ostream & write(const char * buffer,int len);
+//读文件
+//二进制方式写文件主要利用流对象调用成员函数read
+//函数原型:istream & read(char * buffer,int len);
 //参数解释：字符指针buffer指向内存中一段存储空间。len是读写的字节数
 
-//二进制文件可以自定义输入类型
 
 class person
 {
@@ -24,17 +23,22 @@ void test01()
 	//1.包含头文件
 
 	//2.创建流对象
-	ofstream ofs;
+	ifstream ifs;
 
-	//3.打开文件
-	ofs.open("person.txt", ios::out | ios::binary);//ios::out表示输入  ios::binary表示是二进制方式  |表示位或操作符
-
-	//4.写文件
-	person p = { "张三",18 };//初始化
-	ofs.write((const char *)&p, sizeof(person));
+	//3.打开文件  并判断文件是否打开成功
+	ifs.open("person.txt", ios::in | ios::binary);
+	if (!ifs.is_open())
+	{
+		cout << "文件打开失败" << endl;
+	}
+	//4.读文件
+	person p;
+	ifs.read((char *)&p, sizeof(person));//强制转为char *类型
+	cout << p.m_name << endl;
+	cout << p.m_age << endl;
 
 	//5.关文件
-	ofs.close();
+	ifs.close();
 }
 int main()
 {
