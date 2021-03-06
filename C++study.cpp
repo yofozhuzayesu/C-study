@@ -2,40 +2,102 @@
 #include<string>
 using namespace std;
 
-//纯虚函数和抽象类
-//在多态中，通常父类中虚函数的实现是无意义的，主要都是调用子类重写的内容
-//因此可以将虚函数改为纯虚函数
+//多态案例二 制作饮品
+//大致流程：煮水-冲泡-倒入杯中-加入辅料
 
-//纯虚函数语法：virtual 返回值类型 函数名 （参数列表） = 0；
-//当类中有了纯虚函数，这个类也称为抽象类
+//利用多态技术实现本案例，提供抽象制作饮品基类，提供子类制作咖啡和茶叶
 
-//抽象类特点
-//1.无法实例化对象
-//2.子类必须重写抽象类中的纯虚函数，否则也属于抽象类
-
-//抽象类
-class base
+class AbstractDrinking
 {
 public:
-	virtual void func() = 0;//纯虚函数
-};
+	//煮水
+	virtual void Boil() = 0;
+	//冲泡
+	virtual void Brew() = 0;
+	//倒入杯中
+	virtual void PutInCup()= 0;
+	//辅料
+	virtual	void PutSomething() = 0;
 
-class son :public base
-{
-public:
-	virtual void func()//子类重写父类中的纯虚函数，否则无法实例化对象
+	//制作饮品
+	void makeDrink()
 	{
-		cout << "func函数调用" << endl;
+		Boil();
+		Brew();
+		PutInCup();
+		PutSomething();
 	}
 };
-void test01()
+
+//制作咖啡
+class coffee :public AbstractDrinking
 {
-	//base b;  //抽象类是无法实例化对象
-	//new base;//抽象类是无法实例化对象
-	base *b = new son;
-	b->func();
+public:
+	//煮水
+	virtual void Boil()
+	{
+		cout << "煮农夫山泉" << endl;
+	}
+	//冲泡
+	virtual void Brew()
+	{
+		cout << "冲泡咖啡" << endl;
+	}
+	//倒入杯中
+	virtual void PutInCup()
+	{
+		cout << "倒入咖啡杯中" << endl;
+	}
+	//辅料
+	virtual	void PutSomething()
+	{
+		cout << "加入牛奶，糖" << endl;
+	}
+};
+//制作茶叶
+class tea :public AbstractDrinking
+{
+public:
+	//煮水
+	virtual void Boil()
+	{
+		cout << "煮百岁山" << endl;
+	}
+	//冲泡
+	virtual void Brew()
+	{
+		cout << "冲泡茶叶" << endl;
+	}
+	//倒入杯中
+	virtual void PutInCup()
+	{
+		cout << "倒入茶杯" << endl;
+	}
+	//辅料
+	virtual	void PutSomething()
+	{
+		cout << "加入柠檬" << endl;
+	}
+};
+
+
+//工作函数
+void doWork(AbstractDrinking *a)
+{
+	a->makeDrink();
+	delete a;//释放堆区数据
 }
 
+void test01()
+{
+	//制作咖啡
+	doWork(new coffee);
+
+	cout << "--------------------" << endl;
+	//制作茶叶
+	doWork(new tea);
+
+}
 int main()
 {
 	test01();
