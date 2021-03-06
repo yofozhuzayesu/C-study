@@ -1,67 +1,40 @@
 #include<iostream>
-#include<string>
 #include<fstream>
 using namespace std;
 
-//程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被 释放
-//通过文件可以将数据持久化
-//C++中对文件操作需要包含头文件<fstream>
+//二进制文件
+//打开方式指定为 ios:binary
 
-//文件分类两种
-//1.文本文件    文件以文本的ASCII码形式存储在计算机中
-//2.二进制文件  文件以文本的二进制形式存储在计算机中，用户一般不能直接去读
+//写文件
+//二进制方式写文件主要利用流对象调用成员函数write
+//函数原型:ostream & write(const char * buffer,int len);
+//参数解释：字符指针buffer指向内存中一段存储空间。len是读写的字节数
 
-//操作文件的三大类
-//1.ofstream :写操作
-//2.ifstream :读操作
-//3.fstream: 读写操作
+//二进制文件可以自定义输入类型
 
-//文本文件  读文件
+class person
+{
+public:
+	char m_name[64];//姓名
+	int m_age;//年龄
+};
+
 void test01()
 {
 	//1.包含头文件
 
-	//2.创建流对象 
-	ifstream ifs;
+	//2.创建流对象
+	ofstream ofs;
 
-	//3.代开文件 并且判断是否打开成功
-	ifs.open("test.txt", ios::in);
-	if (!ifs.is_open())
-	{
-		cout << "文件打开失败" << endl;
-		return;
-	}
-	
-	//4.读数据
-	//第一种方法
-	/*char buf[1024] = { 0 };
-	while (ifs>>buf)
-	{
-		cout << buf << endl;
-	}*/
+	//3.打开文件
+	ofs.open("person.txt", ios::out | ios::binary);//ios::out表示输入  ios::binary表示是二进制方式  |表示位或操作符
 
-	//第二种办法
-	/*char buf[1024] = { 0 };
-	while (ifs.getline(buf,sizeof(buf)))
-	{
-		cout << buf << endl;
-	}*/
+	//4.写文件
+	person p = { "张三",18 };//初始化
+	ofs.write((const char *)&p, sizeof(person));
 
-	//第三种方法
-	string buf;
-	while (getline(ifs,buf))
-	{
-		cout << buf << endl;
-	}
-
-	//第四种方法 最不常用
-	//char c;
-	//while ((c=ifs.get())!= EOF)// EOF  end of file
-	//{
-	//	cout << c;
-	//}
-	//5.关闭文件
-	ifs.close();
+	//5.关文件
+	ofs.close();
 }
 int main()
 {
