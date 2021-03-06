@@ -1,139 +1,39 @@
 #include<iostream>
 #include<string>
+#include<fstream>
 using namespace std;
 
-//多态案例三-电脑组装
+//程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被 释放
+//通过文件可以将数据持久化
+//C++中对文件操作需要包含头文件<fstream>
 
-//CPU类
-class CPU
-{
-public:
-	//抽象的计算函数
-	virtual void calculate() = 0;
-	~CPU()
-	{
-		cout << "这是CPU的析构函数调用" << endl;
-	}
-};
+//文件分类两种
+//1.文本文件    文件以文本的ASCII码形式存储在计算机中
+//2.二进制文件  文件以文本的二进制形式存储在计算机中，用户一般不能直接去读
 
-//显卡类
-class VideoCard
-{
-public:
-	//抽象的显示函数
-	virtual void display() = 0;
-	~VideoCard()
-	{
-		cout << "这是VideCard的析构函数调用" << endl;
-	}
-};
+//操作文件的三大类
+//1.ofstream :写操作
+//2.ifstream :读操作
+//3.fstream: 读写操作
 
-//内存条类
-class Memory
-{
-public:
-	//抽象的存储函数
-	virtual void storage() = 0;
-	~Memory()
-	{
-		cout << "这是Memory的析构函数调用" << endl;
-	}
-};
-
-//电脑类
-class Computer
-{
-public:
-	Computer(CPU *cpu, VideoCard *vc, Memory *mem)
-	{
-		//将这三个指针全部做接受处理
-		m_cpu = cpu;
-		m_vc = vc;
-		m_mem = mem;
-	}
-	//提供一个工作函数
-	void work()
-	{
-		m_cpu->calculate();
-		m_vc->display();
-		m_mem->storage();
-	}
-	~Computer()
-	{
-		if (m_cpu != NULL)
-		{
-			delete m_cpu;
-			m_cpu = NULL;
-		}
-		if (m_vc != NULL)
-		{
-			delete m_vc;
-			m_vc = NULL;
-		}
-		if (m_mem != NULL)
-		{
-			delete m_mem;
-			m_mem = NULL;
-		}
-		cout << "这是Computer类的析构函数在工作" << endl;
-	}
-private:
-	CPU *m_cpu;//CPU零件指针
-	VideoCard *m_vc;//显卡零件指针
-	Memory *m_mem;//内存条零件指针
-};
-
-//具体厂商
-//英特尔
-class InterCPU:public CPU
-{
-public:
-	virtual void calculate()
-	{
-		cout << "这是Inter的CPU在工作" << endl;
-	}
-
-};
-
-class InterVideoCard :public VideoCard
-{
-public:
-	virtual void display()
-	{
-		cout << "这是Inter的显卡在工作" << endl;
-	}
-
-};
-
-class InterMemory :public Memory
-{
-public:
-	virtual void storage()
-	{
-		cout << "这是Inter的内存条在工作" << endl;
-	}
-
-};
-
+//文本文件  写文件
 void test01()
 {
-	//第一台电脑零件
-	CPU *i_cpu = new InterCPU;
-	VideoCard *i_vc = new InterVideoCard;
-	Memory *i_mem = new InterMemory;
+	//1.包含头文件
 
-	//创建第一台电脑
-	//不能直接创建Computerd对象,因为Computer类不存在默认构造函数
-	Computer *c1 = new Computer(i_cpu, i_vc, i_mem);
-	//或者直接可以写new Computer(new LenovoCPU,new xxxx,new xxx)
+	//2.创建流对象 
+	ofstream ofs;
 
-	c1->work();
-	//释放c1指针指向的堆区的 类型为Computer的对象数据
-	//电脑零件的堆区数据的解决方法？
-	//因为delete c1要调用Computer类的析构函数，所以可以在Computer的析构函数中释放电脑零件的数据
-	delete c1;
+	//3.指定打开方式
+	ofs.open("test.txt", ios::out);
 
+	//4.写内容
+	ofs << "姓名：张三" << endl;
+	ofs << "年龄：18" << endl;
+	ofs << "性别：男" << endl;
 
+	//5.关闭文件
+	ofs.close();
 }
 int main()
 {
