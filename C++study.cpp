@@ -16,24 +16,52 @@ using namespace std;
 //2.ifstream :读操作
 //3.fstream: 读写操作
 
-//文本文件  写文件
+//文本文件  读文件
 void test01()
 {
 	//1.包含头文件
 
 	//2.创建流对象 
-	ofstream ofs;
+	ifstream ifs;
 
-	//3.指定打开方式
-	ofs.open("test.txt", ios::out);
+	//3.代开文件 并且判断是否打开成功
+	ifs.open("test.txt", ios::in);
+	if (!ifs.is_open())
+	{
+		cout << "文件打开失败" << endl;
+		return;
+	}
+	
+	//4.读数据
+	//第一种方法
+	/*char buf[1024] = { 0 };
+	while (ifs>>buf)
+	{
+		cout << buf << endl;
+	}*/
 
-	//4.写内容
-	ofs << "姓名：张三" << endl;
-	ofs << "年龄：18" << endl;
-	ofs << "性别：男" << endl;
+	//第二种办法
+	/*char buf[1024] = { 0 };
+	while (ifs.getline(buf,sizeof(buf)))
+	{
+		cout << buf << endl;
+	}*/
 
+	//第三种方法
+	string buf;
+	while (getline(ifs,buf))
+	{
+		cout << buf << endl;
+	}
+
+	//第四种方法 最不常用
+	//char c;
+	//while ((c=ifs.get())!= EOF)// EOF  end of file
+	//{
+	//	cout << c;
+	//}
 	//5.关闭文件
-	ofs.close();
+	ifs.close();
 }
 int main()
 {
