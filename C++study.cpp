@@ -1,73 +1,42 @@
 #include<iostream>
 using namespace std;
 
-//函数模板案例
 /*
-  案例描述：
-  利用模板封装一个排序的函数，可以对不同数据类型数组进行排序
-  排序规则从大到小，排序算法为选择排序
-  分别利用char数组和int数组进行测试
+
+   普通函数和函数模板区别：
+   1.普通函数调用时可以发生自动类型转换（隐式类型转换）
+   2.函数模板调用时，如果利用自动类型推导，不会发生隐式类型转换
+   3.如果利用显示指定类型的方式，可以发生隐式类型转换
+
 */
 
-
-//交换的函数模板
-template<class T>
-void Myswap(T &a, T &b)
+//普通函数
+int myAdd01(int a, int b)
 {
-	T temp = a;
-	a = b;
-	b = temp;
-}
-//排序算法
-template<class T>
-void Mysort(T arr[],int len)
-{
-	for (int  i = 0; i < len; i++)
-	{
-		int max = i;
-		//内部循环，用于找出真实的最大值
-		for (int j = i+1; j < len; j++)
-		{
-			//我们认定的最大值比遍历出的数值要小，说明j下标的元素才是真正的最大值
-			if (arr[j]>arr[max])
-			{
-				max = j;//更新最大值的下标
-
-			}
-		}
-		if (max != i)
-		{
-			//交换max和i元素
-			Myswap(arr[max], arr[i]);
-		}
-	}
+	return a + b;
 }
 
-//打印数组模板
-template<class T>
-void printArray(T arr[], int len)
-{
-	for (int i = 0; i < len; i++)
-	{
-		cout << arr[i] << " " ;
-	}
-	cout << endl;
-}
 void test01()
 {
-	//测试char数组
-	char charArr[] = "badcfe";
-	int num = sizeof(charArr)/sizeof(char)-1;//数组总长度/每个字符长度  注意字符型数组在末尾自动填充\0 多占一个字节
-	Mysort(charArr, num);
-	printArray(charArr, num);
+	//发生隐式转换，就是函数自动将其他变量转换成int类型
+	//c 对应的ASCII码是99
+	cout << myAdd01('c', 10.5) << endl;
+}
+
+template<class T>
+T myAdd02(T a, T b)
+{
+	return a + b;
 }
 
 void test02()
 {
-	int arr[] = { 1,5,9,4,3,4,6 };
-	int num = sizeof(arr) / sizeof(int);
-	Mysort(arr, num);
-	printArray(arr, num);
+	cout << myAdd02(10, 30) << endl;
+	//自动类型推导，无法发生隐式转换
+	//cout << myAdd02(10.5, 30) << endl;
+
+	//采用显式指定类型的方式，可以发生隐式类型转换
+	cout << myAdd02<int>(10.5, 200.96) << endl;
 }
 int main()
 {
