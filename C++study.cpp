@@ -2,46 +2,53 @@
 using namespace std;
 
 /*
-
-   普通函数和函数模板区别：
-   1.普通函数调用时可以发生自动类型转换（隐式类型转换）
-   2.函数模板调用时，如果利用自动类型推导，不会发生隐式类型转换
-   3.如果利用显示指定类型的方式，可以发生隐式类型转换
-
+	普通函数和函数模板的调用规则:（也就是在重载的情况下）
+	1.如果函数模板和普通函数都可以实现，优先调用普通函数
+	2.可以通过空模板参数列表来强制调用函数模板
+	3.函数模板也可以发生重载
+	4.如果函数模板可以产生更好的匹配，优先调用函数模板
 */
 
-//普通函数
-int myAdd01(int a, int b)
+void Myprint(int a, int b)
 {
-	return a + b;
-}
-
-void test01()
-{
-	//发生隐式转换，就是函数自动将其他变量转换成int类型
-	//c 对应的ASCII码是99
-	cout << myAdd01('c', 10.5) << endl;
+	cout << "这是普通函数调用" << endl;
 }
 
 template<class T>
-T myAdd02(T a, T b)
+void Myprint(T a, T b)
 {
-	return a + b;
+	cout << "这是模板函数的调用" << endl;
+}
+
+//模板函数重载
+template<class T>
+void Myprint(T a, T b,T c)
+{
+	cout << "这是模板函数的调用" << endl;
+}
+
+
+void test01()
+{
+	Myprint(10, 30);
 }
 
 void test02()
 {
-	cout << myAdd02(10, 30) << endl;
-	//自动类型推导，无法发生隐式转换
-	//cout << myAdd02(10.5, 30) << endl;
-
-	//采用显式指定类型的方式，可以发生隐式类型转换
-	cout << myAdd02<int>(10.5, 200.96) << endl;
+	//通过空模板参数列表，强制调用函数模板
+	Myprint<>(20, 60);
+}
+void test03()
+{
+	//理论上普通函数和函数模板都可以调用
+	//但是模板能产生更好的匹配，优先调用模板
+	Myprint('c', 'v');
 }
 int main()
 {
-	//test01();
-	test02();
+	test01();//优先调用普通函数
+	test02();//强制调用函数模板
+	test03();
 	system("pause");
 	return 0;
 }
