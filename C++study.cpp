@@ -3,7 +3,7 @@
 using namespace std;
 
 /*
-	类模板成员函数类外实现
+类模板成员函数类外实现
 */
 
 template<class T1,class T2>
