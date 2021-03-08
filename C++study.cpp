@@ -3,48 +3,56 @@
 using namespace std;
 
 /*
-	类模板和函数模板的区别：
-	1.类模板没有自动类型推导的使用方式
-	2.类模板在模板参数列表中可以有默认参数,函数模板中不允许使用
+	类模板中成员函数创建时机
+	1.普通类中的函数一开始就可以创建
+	2.类模板中的成员函数在调用时才创建
 */
 
-//使AgeType 默认为int 型
-template<class NameType,class AgeType = int>
-class person
+class person1
 {
 public:
-	person(NameType name,AgeType age)
+	void showPerson1()
 	{
-		this->m_name = name;
-		this->m_age = age;
+		cout << "Person1 show" << endl;
 	}
-	NameType m_name;
-	AgeType m_age;
-	void showName()
+};
+
+class person2
+{
+public:
+	void showPerson2()
 	{
-		cout << this->m_name << endl;
-		cout << this->m_age << endl;
+		cout << "Person2 show" << endl;
+	}
+};
+
+template<class T>
+class Myclass
+{
+public:
+	T obj;
+	//类模板中的成员函数
+	//点击生成项目成功，表明func1和func2两个函数没有创建（因为不知道obj是哪个类）
+	void func1()
+	{
+		obj.showPerson1();
+	}
+	void func2()
+	{
+		obj.showPerson2();
 	}
 };
 
 void test01()
 {
-	//person p1("孙悟空",9999); //无法使用自动类型推导，
-	//需要用显式指定类型
-	person<string, int> p1("孙悟空", 99999);
-	p1.showName();
+	Myclass<person1>p1;
+	p1.func1();
+	//p1.func2();
 }
 
-void test02()
-{
-	//模板中已设置默认参数，可以省去模板参数列表中的int
-	person<string> p2("猪八戒", 999);
-	p2.showName();
-}
 int main()
 {
 	test01();
-	test02();
 	system("pause");
 	return 0;
 }
