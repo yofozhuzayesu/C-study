@@ -1,58 +1,32 @@
+#pragma once
 #include<iostream>
-#include<string>
+
 using namespace std;
 
-/*
-类模板成员函数类外实现
-*/
-
-template<class T1,class T2>
-class Person
+#include<string>
+template<class T1, class T2>
+class person
 {
+
 public:
-	//类内实现
-	Person(T1 name, T2 age);
-	//{
-	//	this->m_name = name;
-	//	this->m_age = age;
-	//}
-
-
-	//类内实现
-	void showPerson();
-	//{
-	//	cout << this->m_name << endl;
-	//	cout << this->m_age << endl;
-	//}
-
+	//类内声明 类外实现
+	person(T1 name, T2 age);
+	void showperson();
 
 	T1 m_name;
 	T2 m_age;
 };
-//构造函数类外实现
-template<class T1,class T2>
-Person<T1,T2>::Person(T1 name, T2 age)
+
+template<class T1, class T2>
+person<T1, T2>::person(T1 name, T2 age)
 {
 	this->m_name = name;
 	this->m_age = age;
 }
 
-//成员函数类外实现
-template<class T1,class T2>
-void Person<T1, T2>::showPerson()
+template<class T1, class T2>
+void person<T1, T2>::showperson()
 {
 	cout << this->m_name << endl;
 	cout << this->m_age << endl;
-}
-
-void test01()
-{
-	Person<string, int> p("孙悟空", 999);
-	p.showPerson();
-}
-int main()
-{
-	test01();
-	system("pause");
-	return 0;
 }
