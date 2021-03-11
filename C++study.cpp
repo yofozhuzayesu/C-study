@@ -3,32 +3,33 @@
 using namespace std;
 
 
-//string 字符串比较
-/*
-	比较方式：是按字符的ASCII码进行对比
-	 = 返回0
-	 > 返回1
-	 < 返回-1
-*/
+//string 字符存取
 
 void test01()
 {
 	string str1 = "hello";
-	string str2 = "hello";
+	cout << str1 << endl;
 
-	if (str1.compare(str2)==0)
+	//1.通过[]访问单个字符
+	/*for (int  i = 0; i < str1.size(); i++)
 	{
-		cout << "str1 = str2" << endl;
+		cout << str1[i] << " ";
 	}
-	else if (str1.compare(str2)>0)
+	cout << endl;*/
+
+	//通过at方法
+	for (int i = 0; i < str1.size(); i++)
 	{
-		cout << "str1 > str2" << endl;
+		cout << str1.at(i) << " ";
+		
 	}
-	else
-	{
-		cout << "str1 < str2" << endl;
-	}
+	cout << endl;
+
+	//修改单个字符
+	str1[0] = 'f';
+	cout << str1 << endl;
 }
+
 int main()
 {
 	test01();
