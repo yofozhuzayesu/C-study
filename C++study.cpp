@@ -2,30 +2,47 @@
 #include<string>
 using namespace std;
 
+//string 的赋值操作
 /*
-	string基本概念
-	本质：string是C++风格的字符串，而string本质上是一个类
+	string operator=(const char* s) --------------char*类型字符串 赋值给当前的字符串
+	string operator=(const string &s) ------------把字符串s赋给当前的字符串
+	string operator=(char c) ---------------------把字符赋给当前的字符串
+	string &assign(const char*s ) ----------------把字符串s赋给当前的字符串
+	string &assign(const char* s，int n ) --------把字符串的s的前n个字符赋给当前的字符串
+	string &assign(const string &s) --------------把字符串s的赋给当前字符串
+	string &assign(int n，char c) ----------------把n的字符c赋给当前的字符串
 
-	string和char*的区别：
-	char* 是一个指针
-	string是一个类，类内部封装char*，管理这个字符串，是一个char*型的容器
 */
 
-//string的构造函数
 void test01()
 {
-	string s1;//默认构造
+	string s1;
+	s1 = "hello world";
 	cout << s1 << endl;
 
-	const char* str = "Hello World";
-	string s2(str);//有参构造  也可以写成string s2("Hello World");
+	string s2 = s1;
 	cout << s2 << endl;
 
-	string s3(s2);//拷贝构造
+	string s3;//不能使用string s3 = 'a'  
+	s3 = 'a';
 	cout << s3 << endl;
 
-	string s4(5, 'c');//使用5个c字符初始化
+	string s4;
+	s4.assign("hello world");
 	cout << s4 << endl;
+
+	string s5;
+	s5.assign("hello", 3);
+	cout << s5 << endl;
+
+	string s6;
+	s6.assign(s5);
+	cout << s6 << endl;
+
+	string s7;
+	s7.assign(5, 'a');
+	cout << s7 << endl;
+
 }
 int main()
 {
