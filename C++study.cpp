@@ -1,228 +1,84 @@
 #include<iostream>
 #include<string>
+#include<vector>
+#include<algorithm>
 using namespace std;
 
-/*
-	类模板案例
-	1.可以对内置的数据类型以及自定义数据类型进行存储
-	2.将数组中的数据存储到堆区
-	3.构造函数中可以传入数组的容量
-	4.提供对应的拷贝函数以及operator= 防止浅拷贝问题
-	5.提供尾插法和尾删法对数组中的数据进行增加和删除
-	6.可以通过下标的方式访问数组中的元素
-	7.可以获取数组中当前元素的个数和数组的容量
 
+/*
+    STL基本概念
+	1.STL：标准模板库
+	2.STL从广义上分为容器（container）算法(algorithm)迭代器(itreator)
+	3.容器和算法之间通过迭代器进行无缝连接
+	4.STL几乎所有的代码都采用了模板类或者模板函数
 */
 
-template<class T>
-class MyArray
+/*
+	STL六大组件：容器、算法、迭代器、仿函数、适配器（配接器）、空间配置器
+	1.容器：各种数据结构，如vector、list、deque、set、map等，用来存放数据
+	2.算法：各种常用的算法，如sort、find、copy、for_each等
+	3.迭代器：扮演了容器与算法之间的胶合剂
+	4.仿函数：行为类似函数，可作为算法的某种策略
+	5.适配器：一种用来修饰容器或者仿函数或迭代器接口的东西
+	6.空间配置器：负责空间的配置与管理
+*/
+
+/*
+
+	容器：vector
+	算法：for_each（遍历）
+	迭代器:vector<int>::iterator
+*/
+
+
+void printArr(int val)
 {
-public:
-	MyArray(int capacity)
-	{
-		//初始化
-		this->m_Capacity = capacity;
-		//初始化的时候 元素个数为0
-		this->m_Size = 0;
-		//按照传入的容量 在堆区开辟相应的空间
-		this->pAddress = new T[this->m_Capacity];
-		//cout << "这是有参构造函数的调用" << endl;
-	}
-
-	//尾插法
-	void Push_Back(const T &value)
-	{
-		//先判断容量是否等于大小
-		if (this->m_Capacity == this->m_Size)
-		{
-			//cout << "容量已满，无法再插入数据" << endl;
-			return;
-		}
-		this->pAddress[this->m_Size] = value;//在数组末尾插入数据
-		this->m_Size++;//更新数组大小
-	}
-
-	//尾删法
-	void Pop_Back()
-	{
-		//直接让用户无法访问最后一个元素，即是尾删
-		if (this->m_Size == 0)
-		{
-			return;
-		}
-		this->m_Size--;//逻辑上尾删
-	}
-
-	//通过下标的访问数组中的元素
-	//类对象 无法识别中括号[],因此还需要重载下[]
-	//如果想让返回值 this->pAddress[index] 可以作为左值，则需要返回自身，所以采用引用的方式
-	T & operator[](int index)
-	{
-		return this->pAddress[index];
-	}
-
-	//返回数组的容量
-	int getCapacity()
-	{
-		return this->m_Capacity;
-	}
-	//返回数组的大小
-	int getSize()
-	{
-		return this->m_Size;
-	}
-
-	~MyArray()
-	{
-		if (this->pAddress != NULL)
-		{
-			//cout << "析构函数的调用" << endl;
-			delete[] this->pAddress;//因为是数组，要加[]
-			this->pAddress = NULL;//置空，防止变成野指针
-		}
-	}
-	//拷贝构造函数
-	//防止浅拷贝
-	MyArray(const MyArray&arr)
-	{
-
-		this->m_Capacity = arr.m_Capacity;
-		this->m_Size = arr.m_Size;
-		//深拷贝
-		this->pAddress = new T[arr.m_Capacity];
-		//如果arr中有数据了，则需要将arr中的数据全部拷贝过来
-		for (int i = 0; i < this->m_Size; i++)
-		{
-			this->pAddress[i] = arr.pAddress[i];
-		}
-		//cout << "这是拷贝构造函数的调用" << endl;
-	}
-	//operator= 也是防止浅拷贝的问题
-	MyArray & operator = (const MyArray &arr)
-	{
-		//先判断原来堆区是否有数据，如果有先释放
-		if (this->pAddress != NULL)
-		{
-			delete[] this->pAddress;
-			//将this中的所有数据置为空和置为0
-			this->pAddress = NULL;
-			this->m_Capacity = 0;
-			this->m_Size = 0;
-		}
-
-		//深拷贝
-		this->m_Capacity = arr.m_Capacity;
-		this->m_Size = arr.m_Size;
-		this->pAddress = new T[this->m_Capacity];
-		for (int i = 0; i < this->m_Size; i++)
-		{
-			this->pAddress[i] = arr.pAddress[i];
-		}
-		//cout << "这是=重载的调用" << endl;
-		return *this;//将自身作一个返回
-	}
-private:
-	T *pAddress;//指针指向堆区开辟的真实数据
-	int m_Capacity;//数组容量
-	int m_Size;//数组元素个数
-
-};
-
-
-
-//输出内置数据类型
-void printArray(MyArray<int> &arr)
-{
-	for (int  i = 0; i < arr.getSize(); i++)
-	{
-		//重载了[]运算符，可以直接输出arr[]
-		cout << arr[i] << " ";
-	}
-	cout << endl;
+	cout << val << " ";
 }
-
+//vector容器存放内置数据类型
 void test01()
-{
-	//MyArray是类模板，调用的时候需要定义参数类型
-	//构造函数初始化
-	MyArray<int>arr1(5);
+{	//创建了一个vector容器
+	vector<int> v;
 
-	for (int  i = 0; i < 5; i++)
+	//向容器中插入数据
+	v.push_back(10);
+	v.push_back(20);
+	v.push_back(30);
+	v.push_back(40);
+	v.push_back(50);
+
+	//访问容器中的数据
+	/*for (int i = 0; i < v.size(); i++)
 	{
-		//利用尾插法向数组中插入数据
-		arr1.Push_Back(i);
+		cout << v[i] << " ";
 	}
+	cout << endl;*/
 
-	cout << "arr1中的元素为：";
-	printArray(arr1);
-	cout << "arr1的容量大小为"<<arr1.getCapacity() << endl;
-	cout << "arr1的元素个数为"<<arr1.getSize() << endl;
+	//通过迭代器访问容器中的数据
+	//vector<int>::iterator itBegin = v.begin();//起始迭代器，指向容器中的第一个元素
+	//vector<int>::iterator itEnd = v.end();//结束迭代器，指向容器中最后一个元素的下一个位置
 
-	MyArray<int>arr2(arr1);
-	
+	//第一种遍历方式
+	//while (itBegin != itEnd)
+	//{
+	//	cout << *itBegin << " ";
+	//	itBegin++;
+	//}
 
-	//尾删测试
-	arr2.Pop_Back();
-	cout << "arr2中的元素为：";
-	printArray(arr2);
-	cout << "arr2的容量大小为" << arr2.getCapacity() << endl;
-	cout << "arr2的元素个数为" << arr2.getSize() << endl;
-}
+	//第二种遍历方式
+	//for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
+	//{
+	//	cout << *it << " ";
 
-//测试自定数据类型
-class person
-{
-public:
-	//编写了有参构造函数后，C++就不会在提供默认构造函数
-	//MyArray<person>arr3(5)  该句调用MyArray类的有参构造函数，会在堆区创建person类的数据，又会调用person类的默认构造
-	//所以需要手动补齐默认构造
-	person() {};
-	person(string name,int age)
-	{
-		this->m_name = name;
-		this->m_age = age;
-	}
-	string m_name;
-	int m_age;
-};
-//输出自定义数据类型
-void printPersonArray(MyArray<person> &arr)
-{
-	for (int i = 0; i < arr.getSize(); i++)
-	{
-		cout << arr[i].m_name << " " << arr[i].m_age << endl;
-	}
-}
-void test02()
-{
-	MyArray<person>arr3(5);
-	person p1("孙悟空", 9999);
-	person p2("孙悟空", 9999);
-	person p3("孙悟空", 9999);
-	person p4("孙悟空", 9999);
-	person p5("孙悟空", 9999);
+	//}
+	//cout << endl;
 
-	arr3.Push_Back(p1);
-	arr3.Push_Back(p2);
-	arr3.Push_Back(p3);
-	arr3.Push_Back(p4);
-	arr3.Push_Back(p5);
-
-	printPersonArray(arr3);
-	cout << "arr3的容量为：" << arr3.getCapacity() << endl;
-	cout << "arr3的大小为：" << arr3.getSize() << endl;
-
-
-	MyArray<person>arr4(arr3);
-	arr4.Pop_Back();
-	printPersonArray(arr4);
-	cout << "arr4的容量为：" << arr4.getCapacity() << endl;
-	cout << "arr4的大小为：" << arr4.getSize() << endl;
+	//第三种遍历方式  利用STL中提供的遍历算法
+	for_each(v.begin(), v.end(), printArr);
 }
 int main()
 {
-	//test01();
-	test02();
+	test01();
 	system("pause");
 	return 0;
 }
