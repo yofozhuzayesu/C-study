@@ -4,92 +4,48 @@
 #include<algorithm>
 using namespace std;
 
-/*
-
-	容器：vector
-	算法：for_each（遍历）
-	迭代器:vector<int>::iterator
-*/
-
-//vector容器 存放自定义数据类型
-
-
-
-
-//自定义数据类型
-class person
-{
-public:
-	person(string name,int age)
-	{
-		this->m_name = name;
-		this->m_age = age;
-	}
-	string m_name;
-	int m_age;
-};
-
-//ostream &operator <<(ostream &cout, person p)
-//{
-//	cout << p.m_name << "  " << p.m_name << endl;
-//	return cout;
-//}
+//vector容器嵌套容器
+//类似于一个二维数组
 
 void test01()
 {
-	person p1("孙悟空", 99999);
-	person p2("孙悟空", 99999);
-	person p3("孙悟空", 99999);
-	person p4("孙悟空", 99999);
+	vector<vector<int>>v;
 
-	vector<person> v;
-	v.push_back(p1);
-	v.push_back(p2);
-	v.push_back(p3);
-	v.push_back(p4);
-
-	for (vector<person>::iterator i = v.begin(); i != v.end(); i++)
+	//创建小容器
+	vector<int>v1;
+	vector<int>v2;
+	vector<int>v3;
+	vector<int>v4;
+	
+	//向小容器中添加数据
+	for (int i = 0; i < 4; i++)
 	{
-		//一种输出方式是重载<<符号
-		//cout << *i << endl;
+		v1.push_back(i + 1);
+		v2.push_back(i + 2);
+		v3.push_back(i + 3);
+		v4.push_back(i + 4);
+	}
 
-		//第二种输出方式  i的解引用就是person类对象，然后直接访问对象内中的属性即可
-		//cout << (*i).m_name << " " << (*i).m_age << endl;
+	//将容器插到大容器中
+	v.push_back(v1);
+	v.push_back(v2);
+	v.push_back(v3);
+	v.push_back(v4);
 
-		//第三种输出方式
-		//i是指针，可以通过指针的方式拿到数据
-		cout << i->m_name << " " << i->m_age << endl;
+	//通过大容器，把所有数据都遍历一遍
+	for (vector<vector<int>>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		//(*it)----容器vector<int> 需要再来一次遍历输出
+		for (vector<int>::iterator vit = (*it).begin(); vit != (*it).end(); vit++)
+		{
+			cout << (*vit) << " ";
+		}
+		cout << endl;
 	}
 }
-
-//存放自定义类型指针
-void test02()
-{
-	person p1("孙悟空", 99999);
-	person p2("孙悟空", 99999);
-	person p3("孙悟空", 99999);
-	person p4("孙悟空", 99999);
-
-	vector<person*> v;
-	v.push_back(&p1);
-	v.push_back(&p2);
-	v.push_back(&p3);
-	v.push_back(&p4);
-
-	for (vector<person*>::iterator it = v.begin(); it != v.end(); it++)
-	{
-		//第一种输出方式，先解引用出对象
-		//cout << (*(*it)).m_name << " " << (*(*it)).m_age << endl;
-
-		//第二种方式，*it 也是指针
-		cout << (*it)->m_name << " " << (*it)->m_age << endl;
-	}
-}
-
 int main()
 {
-	//test01();
-	test02();
+	test01();
 	system("pause");
 	return 0;
 }
