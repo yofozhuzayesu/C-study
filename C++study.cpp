@@ -1,47 +1,31 @@
 #include<iostream>
 #include<string>
-#include<vector>
-#include<algorithm>
 using namespace std;
 
-//vector容器嵌套容器
-//类似于一个二维数组
+/*
+	string基本概念
+	本质：string是C++风格的字符串，而string本质上是一个类
 
+	string和char*的区别：
+	char* 是一个指针
+	string是一个类，类内部封装char*，管理这个字符串，是一个char*型的容器
+*/
+
+//string的构造函数
 void test01()
 {
-	vector<vector<int>>v;
+	string s1;//默认构造
+	cout << s1 << endl;
 
-	//创建小容器
-	vector<int>v1;
-	vector<int>v2;
-	vector<int>v3;
-	vector<int>v4;
-	
-	//向小容器中添加数据
-	for (int i = 0; i < 4; i++)
-	{
-		v1.push_back(i + 1);
-		v2.push_back(i + 2);
-		v3.push_back(i + 3);
-		v4.push_back(i + 4);
-	}
+	const char* str = "Hello World";
+	string s2(str);//有参构造  也可以写成string s2("Hello World");
+	cout << s2 << endl;
 
-	//将容器插到大容器中
-	v.push_back(v1);
-	v.push_back(v2);
-	v.push_back(v3);
-	v.push_back(v4);
+	string s3(s2);//拷贝构造
+	cout << s3 << endl;
 
-	//通过大容器，把所有数据都遍历一遍
-	for (vector<vector<int>>::iterator it = v.begin(); it != v.end(); it++)
-	{
-		//(*it)----容器vector<int> 需要再来一次遍历输出
-		for (vector<int>::iterator vit = (*it).begin(); vit != (*it).end(); vit++)
-		{
-			cout << (*vit) << " ";
-		}
-		cout << endl;
-	}
+	string s4(5, 'c');//使用5个c字符初始化
+	cout << s4 << endl;
 }
 int main()
 {
