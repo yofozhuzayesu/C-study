@@ -2,41 +2,41 @@
 #include<string>
 using namespace std;
 
-//string 字符串拼接：实现在字符串末尾拼接字符串
+//string查找和替换
 
 /*
-	string& operator+=(const char* str)             //重载+=运算符
-	string& operator+=(cosnt char c)                //重载+=运算符
-	string& operator+=(const string& str)           //重载+=运算符
-	string& append(const char *s)                   //把字符串s连接到当前字符串结尾
-	string& append(const char *s，int n)            //把字符串s的前n个字符连接到当前字符串结尾
-	string& append(const string &s)                 //同operator+=(const string& str)
-	string& append(const string &s,int pos,int n)   //字符串s中从pos开始的n个字符连接到字符串结尾
+	功能描述：
+	查找：查找指定字符串是否存在
+	替换：在指定的位置替换字符串
 
 */
 
+//1.查找
 void test01()
 {
-	string s1 = "hello";
-	s1 += " world";
-	cout << s1 << endl;
+	string str1 = "abcdefghjklmn";
+	int pos = str1.find("de");
+	cout << pos << endl;//pos为3 表示从第四号位开始    查找不到的时候就返回-1 （必须要用一个整形变量接收）
 
-	s1 += ';';
-	cout << s1 << endl;
+	//rfind
+	//rfind从右往左查找（也就是从右边开始有更靠前的de的时候就查找该de），find从左往右查找
+	//虽热两个查找方式不同，但是输出结果都是从左往右的
+	pos = str1.rfind("de");
+	cout << pos << endl;
+}
 
-	string s2 = "你好";
-	s1 += s2;
-	cout << s1 << endl;
 
-	string s3 = "hello";
-	string s4 = "world";
-	s3.append(s4);
-	cout << s3 << endl;
-
+//替换
+void test02()
+{
+	string str1 = "abcdefg";
+	str1.replace(1, 3, "1111");//表示从1号位置开始，往后三个字符替换成"1111"
+	cout << str1 << endl;
 }
 int main()
 {
-	test01();
+	//test01();
+	test02();
 	system("pause");
 	return 0;
 }
