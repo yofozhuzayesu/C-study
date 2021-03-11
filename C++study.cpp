@@ -2,46 +2,36 @@
 #include<string>
 using namespace std;
 
-//string 的赋值操作
+//string 字符串拼接：实现在字符串末尾拼接字符串
+
 /*
-	string operator=(const char* s) --------------char*类型字符串 赋值给当前的字符串
-	string operator=(const string &s) ------------把字符串s赋给当前的字符串
-	string operator=(char c) ---------------------把字符赋给当前的字符串
-	string &assign(const char*s ) ----------------把字符串s赋给当前的字符串
-	string &assign(const char* s，int n ) --------把字符串的s的前n个字符赋给当前的字符串
-	string &assign(const string &s) --------------把字符串s的赋给当前字符串
-	string &assign(int n，char c) ----------------把n的字符c赋给当前的字符串
+	string& operator+=(const char* str)             //重载+=运算符
+	string& operator+=(cosnt char c)                //重载+=运算符
+	string& operator+=(const string& str)           //重载+=运算符
+	string& append(const char *s)                   //把字符串s连接到当前字符串结尾
+	string& append(const char *s，int n)            //把字符串s的前n个字符连接到当前字符串结尾
+	string& append(const string &s)                 //同operator+=(const string& str)
+	string& append(const string &s,int pos,int n)   //字符串s中从pos开始的n个字符连接到字符串结尾
 
 */
 
 void test01()
 {
-	string s1;
-	s1 = "hello world";
+	string s1 = "hello";
+	s1 += " world";
 	cout << s1 << endl;
 
-	string s2 = s1;
-	cout << s2 << endl;
+	s1 += ';';
+	cout << s1 << endl;
 
-	string s3;//不能使用string s3 = 'a'  
-	s3 = 'a';
+	string s2 = "你好";
+	s1 += s2;
+	cout << s1 << endl;
+
+	string s3 = "hello";
+	string s4 = "world";
+	s3.append(s4);
 	cout << s3 << endl;
-
-	string s4;
-	s4.assign("hello world");
-	cout << s4 << endl;
-
-	string s5;
-	s5.assign("hello", 3);
-	cout << s5 << endl;
-
-	string s6;
-	s6.assign(s5);
-	cout << s6 << endl;
-
-	string s7;
-	s7.assign(5, 'a');
-	cout << s7 << endl;
 
 }
 int main()
