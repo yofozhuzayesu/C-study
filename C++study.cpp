@@ -3,10 +3,15 @@
 using namespace std;
 
 /*
-	deque容器赋值操作
-	deque& operator=(const deque &deq)            //重载等号操作符
-	assign(beg,end)                               //将[beg,end)区间中的数据拷贝赋值给本身
-	assign(n,elem)                                //将n个elem拷贝赋值给本身
+	deque大小操作
+	empty()                //判断容器是否为空
+	size()                 //返回容器中元素的个数
+	resize(int num)        //重新指定容器的长度为num，若容器变长，则以默认值填充新位置
+						   //如果容器变短，则末尾超出容器长度的元素被删除
+	resize(int num,elem)   //重新指定容器的长度为num，若容器变长，则以elem值填充新位置
+	                       //如果容器变短，则末尾超出容器长度的元素被删除
+
+	注意：deque没有capacity函数，也就是deque可以无限的开辟空间
 */
 
 void printDeque(const deque<int>&d)
@@ -19,23 +24,29 @@ void printDeque(const deque<int>&d)
 }
 void test01()
 {
-	deque<int> d1;
-	for (int i  = 0; i < 10; i++)
+	deque<int>d1;
+	for (int i = 0; i < 10; i++)
 	{
 		d1.push_back(i);
 	}
 	printDeque(d1);
 
-	deque<int> d2 = d1;
-	printDeque(d2);
+	if (d1.empty())
+	{
+		cout << "d1为空" << endl;
+	}
+	else
+	{
+		cout << "d1不为空" << endl;
+	}
 
-	deque<int> d3;
-	d3.assign(d2.begin(), d2.begin() + 3);
-	printDeque(d3);
-
-	deque<int> d4;
-	d4.assign(5, 10);
-	printDeque(d4);
+	cout << "d1的元素个数为：" << d1.size() << endl;
+	
+	d1.resize(15);
+	printDeque(d1);
+	
+	d1.resize(19, 1);
+	printDeque(d1);
 }
 int main()
 {
