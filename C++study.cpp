@@ -3,15 +3,8 @@
 using namespace std;
 
 /*
-	deque大小操作
-	empty()                //判断容器是否为空
-	size()                 //返回容器中元素的个数
-	resize(int num)        //重新指定容器的长度为num，若容器变长，则以默认值填充新位置
-						   //如果容器变短，则末尾超出容器长度的元素被删除
-	resize(int num,elem)   //重新指定容器的长度为num，若容器变长，则以elem值填充新位置
-	                       //如果容器变短，则末尾超出容器长度的元素被删除
-
-	注意：deque没有capacity函数，也就是deque可以无限的开辟空间
+	deque插入和删除
+	与vector不同的是 可以前插和前删
 */
 
 void printDeque(const deque<int>&d)
@@ -31,26 +24,58 @@ void test01()
 	}
 	printDeque(d1);
 
-	if (d1.empty())
-	{
-		cout << "d1为空" << endl;
-	}
-	else
-	{
-		cout << "d1不为空" << endl;
-	}
+	//尾删
+	d1.pop_back();
+	printDeque(d1);
 
-	cout << "d1的元素个数为：" << d1.size() << endl;
-	
-	d1.resize(15);
+	//前删
+	d1.pop_front();
 	printDeque(d1);
-	
-	d1.resize(19, 1);
-	printDeque(d1);
+
+}
+
+void test02()
+{
+	deque<int>d;
+	d.push_back(10);
+	d.push_back(20);
+	d.push_back(30);
+	d.push_back(40);
+
+	//insert插入
+	d.insert(d.begin()+2, 2,1000);//第一个参数是pos  第二个参数是插入的个数  第三个元素是插入的数据
+	printDeque(d);
+
+	//区间插入
+	deque<int>d2;
+	d2.push_back(1);
+	d2.push_back(2);
+	d2.push_back(3);
+
+	d.insert(d.begin(), d2.begin(), d2.end());
+	printDeque(d);
+}
+
+//删除
+void test03()
+{
+	deque<int>d;
+	d.push_back(10);
+	d.push_back(20);
+	d.push_back(30);
+	d.push_back(40);
+
+	d.erase(d.begin(), d.begin() + 3);
+	printDeque(d);
+
+	d.clear();
+	printDeque(d);
 }
 int main()
 {
-	test01();
+	//test01();
+	//test02();
+	test03();
 	system("pause");
 	return 0;
 }
