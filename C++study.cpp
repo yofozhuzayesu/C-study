@@ -1,51 +1,49 @@
 #include<iostream>
-#include<stack>
+#include<queue>
 using namespace std;
 
 /*
-	stack容器
-	stack是一种先进后出的数据结构，他只有一个出口
-	栈中只有顶端的元素才可以被外界使用，因此栈不允许有遍历行为
+	queue容器(队列容器)
+	queue是一种先进先出的数据结构，他有两个出口，队头只能出数据，队尾只能进数据
+	队列容器允许从一端新增元素，从另一端移除元素
+	队列中只有队头和队尾才可以被外部使用，因此队列不允许有遍历行为
+	
+	构造函数：
+	queue<T> que;
+	queue<T> que(const queue &que);
 
-	构造函数
-	stack<T> stk;                    //stack采用模板类实现，stack对象的默认构造形式
-	stack(const stack &stk)          //拷贝构造函数
-
-	赋值操作
-	stack& operator=(const stack &stk)  //重载等号运算符
+	赋值操作：
+	queue& opetator=(const queue &que)
 
 	数据存取
-	push(elem)                        //向栈顶添加元素
-	pop()                             //从栈顶移除第一个元素
-	top()                             //返回栈顶元素
+	push(elem)      //往队尾加元素
+	pop()           //从队头移除第一个元素
+	back()          //返回最后一个元素   队尾的元素
+	front()         //返回第一个元素     队头的元素
 
-	大小操作
-	empty()                           //判断栈是否为空
-	size()                            //返回栈的大小
-
-
+	大小操作：
+	empty()
+	size()
  */
 
 void test01()
 {
-	stack<int>stk;
-	//stack<int>::iterator;  栈无法遍历
+	queue<int> que;
+	que.push(10);
+	que.push(20);
+	que.push(30);
+	que.push(40);
+	que.push(50);
+	cout << "最后一个值为：" << que.back() << endl;
+	cout << "第一个元素为：" << que.front() << endl;
+	cout << "队列大小为" << que.size() << endl;
 
-	//入栈
-	stk.push(10);
-	stk.push(20);
-	stk.push(30);
-	stk.push(40);
-	cout << stk.top() << endl;
-	cout << stk.size() << endl;
-
-	//出栈
-	stk.pop();
-	cout << stk.top() << endl;
-	cout << stk.size() << endl;
-		
+	//出队
+	que.pop();
+	cout << "出队一个元素后最后一个值为：" << que.back() << endl;
+	cout << "出队一个元素后第一个元素为：" << que.front() << endl;
+	cout << "出队一个元素后队列大小为" << que.size() << endl;
 }
-
 
 int main()
 {
