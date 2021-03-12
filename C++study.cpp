@@ -1,13 +1,12 @@
 #include<iostream>
 #include<deque>
+#include<algorithm>
 using namespace std;
 
 /*
-	deque 数据存取操作
-	at(int idx)
-	operatot[]
-	front()     //返回容器中的第一个数据元素
-	back（）    //返回容器中的最后一个数据元素
+	deque容器排序
+	sort(iterator beg,iterator end)  //对beg和end区间的元素进行排序
+
 */
 
 void printDeque(const deque<int> &d)
@@ -22,16 +21,19 @@ void printDeque(const deque<int> &d)
 void test01()
 {
 	deque<int> d1;
-	d1.push_back(10);
+	d1.push_back(60);
 	d1.push_back(20);
-	d1.push_back(30);
 	d1.push_back(40);
-	d1.push_back(50);
+	d1.push_back(30);
+	d1.push_back(10);
 
-	cout << d1[1] << endl;//20
-	cout << d1.at(1) << endl;//20
-	cout << d1.front() << endl;//10
-	cout << d1.back() << endl;//50
+	//排序之前
+	printDeque(d1);
+
+	//排序之后  sort默认排序是升序  
+	//对于支持随机访问的迭代器的容器，都可以利用sort算法直接对其进行排序 例如vector
+	sort(d1.begin(), d1.end());
+	printDeque(d1);
 }
 int main()
 {
