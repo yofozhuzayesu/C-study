@@ -3,13 +3,13 @@
 using namespace std;
 
 /*
-	vector互换容器
-	目的：实现两个容器内元素进行互换
-	原型：swap(vec)   //将vec与本身的元素互换
-
+	vector预留空间
+	减少vector在动态扩展容量时的拓展次数
+	reserve(int len)       //容器预留len个元素长度，预留位置不初始化，元素不可访问
+ 
 */
 
-//基本使用
+
 void printVector(vector<int>&v)
 {
 	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
@@ -18,57 +18,30 @@ void printVector(vector<int>&v)
 	}
 	cout << endl;
 }
+
 void test01()
 {
-	vector<int> v1;
-	for (int i = 0; i < 10; i++)
-	{
-		v1.push_back(i);
-	}
-	vector<int> v2;
-	for (int i = 10; i > 0; i--)
-	{
-		v2.push_back(i);
-	}
-	cout << "这是交换前的容器数据" << endl;
-	printVector(v1);
-	printVector(v2);
-
-	cout << "这是交换后的容器数据：" << endl;
-	v1.swap(v2);
-	printVector(v1);
-	printVector(v2);
-}
-
-
-//2.实际用途
-//巧用swap可以收缩内存空间
-void test02()
-{
 	vector<int>v;
+	//利用reserve预留空间
+	v.reserve(100000);
+	int num = 0;//统计开辟的次数
+	int *p = NULL;
 	for (int i = 0; i < 100000; i++)
 	{
 		v.push_back(i);
+		if (p!=&v[0])
+		{
+			//每次开辟内存时，首地址都会发生改变
+			//不用reserve函数的话，num最后变成30
+			p = &v[0];
+			num++;
+		}
 	}
-
-	cout << "V的容量为：" << v.capacity() << endl;
-	cout << "V的大小为：" << v.size() << endl;
-
-	v.resize(3);//重新指定大小  但是容量不会变
-	cout << "V的容量为：" << v.capacity() << endl;
-	cout << "V的大小为：" << v.size() << endl;
-
-	//巧用swap收缩内存
-	//vector<int>(v)  相当于对一个匿名对象进行拷贝构造，利用v目前所用的元素个数来初始化这个匿名对象的容量
-	//.swap(v)  容器的指针交换  至于匿名对象 会由系统自动收回
-	vector<int>(v).swap(v);
-	cout << "V的容量为：" << v.capacity() << endl;
-	cout << "V的大小为：" << v.size() << endl;
+	cout << num << endl;
 }
 int main()
 {
-	//test01();
-	test02();
+	test01();
 	system("pause");
 	return 0;
 }
