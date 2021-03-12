@@ -3,15 +3,21 @@
 using namespace std;
 
 /*
-	vector容器赋值操作
-	vector& operator=(const vector &vec);               //重载等号操作符
-	assign(beg,end);                                    //将[begin,end)区间中的数据拷贝赋值给本身
-	assign(n,elem);                                     //将n个elem拷贝赋值给本身      
+	vector容器的容量和大小操作
+	函数原型：
+	empty()                //判断容器是否为空
+	capacity()             //容器的容量
+	size()                 //返回容器中元素的个数
+	resize(int num)        //重新指定容器的长度为num，若容器变长，则以默认值填充新位置
+						   //如果容器变短，则末尾超出容器长度的元素被删除
+	resize(int num,elem)   //重新指定容器的长度为num，若容器变长，则以elem值填充新位置
+	                       //如果容器变短，则末尾超出容器长度的元素被删除
+
 */
 
-void printVector(vector<int> &vec)
+void printVector(vector<int>&v)
 {
-	for (vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
 	{
 		cout << *it << " ";
 	}
@@ -26,17 +32,30 @@ void test01()
 	}
 	printVector(v1);
 
-	vector<int>v2 = v1;
-	printVector(v2);
+	//判断容器是否为空
+	//empty()函数返回值为bool类型
+	if (v1.empty())
+	{
+		cout << "v1为空" << endl;
+	}
+	else
+	{
+		cout << "v1不为空" << endl;
+	}
 
-	vector<int>v3;
-	v3.assign(v1.begin(), v1.end());
-	printVector(v3);
+	//获得容器的容量 13 
+	cout << v1.capacity() << endl;
+	//获得v1的大小
+	cout << v1.size() << endl;
 
-	vector<int>v4;
-	v4.assign(5, 9);
-	printVector(v4);
+	//重新指定大小
+	v1.resize(15);
+	printVector(v1);//如果重新指定的过长，默认用0填充新的位置
+	v1.resize(19, 100);//或者利用100填充
+	printVector(v1);
 }
+
+
 int main()
 {
 	test01();
