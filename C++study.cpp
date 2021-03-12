@@ -1,44 +1,50 @@
 #include<iostream>
-#include<vector>
+#include<deque>
 using namespace std;
 
 /*
-	vector预留空间
-	减少vector在动态扩展容量时的拓展次数
-	reserve(int len)       //容器预留len个元素长度，预留位置不初始化，元素不可访问
- 
+	deque容器
+	双端数组，可以对头端进行插入删除杀出
+
+	deque和vector区别
+	1.vector对于头部的插入删除效率低，数据量大，效率越低
+	2.deque相对而言，对头部的插入删除速度比vector快
+	3.vector访问元素时的速度会比deque快，这和两者内部实现有关
+
+	deque构造函数 类似vector
 */
 
-
-void printVector(vector<int>&v)
+void printDeque(const deque<int>&d)
 {
-	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
+	for (deque<int>::const_iterator it = d.begin(); it != d.end(); it++)
 	{
-		cout << *it<<" " ;
+		//为了防止修改操作
+		//形参中用const 
+		//同样的迭代器 也要改写成const_iterator
+		//*it = 100;
+		cout << *it << " ";
 	}
 	cout << endl;
 }
-
 void test01()
 {
-	vector<int>v;
-	//利用reserve预留空间
-	v.reserve(100000);
-	int num = 0;//统计开辟的次数
-	int *p = NULL;
-	for (int i = 0; i < 100000; i++)
+	deque<int> d1;
+	for (int i = 0; i < 10; i++)
 	{
-		v.push_back(i);
-		if (p!=&v[0])
-		{
-			//每次开辟内存时，首地址都会发生改变
-			//不用reserve函数的话，num最后变成30
-			p = &v[0];
-			num++;
-		}
+		d1.push_back(i);
 	}
-	cout << num << endl;
+	printDeque(d1);
+
+	deque<int>d2(d1.begin(), d1.end());//将d1中的区间内的元素拷贝给d2
+	printDeque(d2);
+
+	deque<int>d3(10, 100);
+	printDeque(d3);
+
+	deque<int>d4(d3);
+	printDeque(d4);
 }
+
 int main()
 {
 	test01();
