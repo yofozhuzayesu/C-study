@@ -3,11 +3,14 @@
 using namespace std;
 
 /*
-	deque插入和删除
-	与vector不同的是 可以前插和前删
+	deque 数据存取操作
+	at(int idx)
+	operatot[]
+	front()     //返回容器中的第一个数据元素
+	back（）    //返回容器中的最后一个数据元素
 */
 
-void printDeque(const deque<int>&d)
+void printDeque(const deque<int> &d)
 {
 	for (deque<int>::const_iterator it = d.begin(); it != d.end(); it++)
 	{
@@ -15,67 +18,24 @@ void printDeque(const deque<int>&d)
 	}
 	cout << endl;
 }
+
 void test01()
 {
-	deque<int>d1;
-	for (int i = 0; i < 10; i++)
-	{
-		d1.push_back(i);
-	}
-	printDeque(d1);
+	deque<int> d1;
+	d1.push_back(10);
+	d1.push_back(20);
+	d1.push_back(30);
+	d1.push_back(40);
+	d1.push_back(50);
 
-	//尾删
-	d1.pop_back();
-	printDeque(d1);
-
-	//前删
-	d1.pop_front();
-	printDeque(d1);
-
-}
-
-void test02()
-{
-	deque<int>d;
-	d.push_back(10);
-	d.push_back(20);
-	d.push_back(30);
-	d.push_back(40);
-
-	//insert插入
-	d.insert(d.begin()+2, 2,1000);//第一个参数是pos  第二个参数是插入的个数  第三个元素是插入的数据
-	printDeque(d);
-
-	//区间插入
-	deque<int>d2;
-	d2.push_back(1);
-	d2.push_back(2);
-	d2.push_back(3);
-
-	d.insert(d.begin(), d2.begin(), d2.end());
-	printDeque(d);
-}
-
-//删除
-void test03()
-{
-	deque<int>d;
-	d.push_back(10);
-	d.push_back(20);
-	d.push_back(30);
-	d.push_back(40);
-
-	d.erase(d.begin(), d.begin() + 3);
-	printDeque(d);
-
-	d.clear();
-	printDeque(d);
+	cout << d1[1] << endl;//20
+	cout << d1.at(1) << endl;//20
+	cout << d1.front() << endl;//10
+	cout << d1.back() << endl;//50
 }
 int main()
 {
-	//test01();
-	//test02();
-	test03();
+	test01();
 	system("pause");
 	return 0;
 }
