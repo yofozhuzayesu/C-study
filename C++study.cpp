@@ -3,23 +3,15 @@
 using namespace std;
 
 /*
-	vector容器
-	功能：vector数据结构和数组非常类似，也称为单端数组
-	与普通数组的区别：不同之处在于数组是静态空间，而vector可以动态拓展
-	动态拓展：并不是在原空间之后续解新空间，而是找更大的内存空间，然后将原数据拷贝新空间，释放原空间
-			  vector容器的迭代器是支持随机访问的迭代器
+	vector容器赋值操作
+	vector& operator=(const vector &vec);               //重载等号操作符
+	assign(beg,end);                                    //将[begin,end)区间中的数据拷贝赋值给本身
+	assign(n,elem);                                     //将n个elem拷贝赋值给本身      
 */
 
-/*
-	vector构造函数
-	vector<T> v                        //采用模板实现类实现，默认构造函数
-	vector(v.begin(),v.end())          //将[begin,end) (注意是左闭右开)区间中的元素拷贝给本身
-	vector(n,elem)                     //构造函数将n个elem拷贝给本身
-	vector(const vector &vec)          //拷贝构造函数
-*/
-void printVector(vector<int>&v)
+void printVector(vector<int> &vec)
 {
-	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
+	for (vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
 	{
 		cout << *it << " ";
 	}
@@ -27,21 +19,22 @@ void printVector(vector<int>&v)
 }
 void test01()
 {
-	vector<int> v1;//无参默认构造
+	vector<int>v1;
 	for (int i = 0; i < 10; i++)
 	{
 		v1.push_back(i);
 	}
 	printVector(v1);
 
-	//通过区间方式构造
-	vector<int>v2(v1.begin(), v1.end());
+	vector<int>v2 = v1;
 	printVector(v2);
 
-	vector<int>v3(5, 2);
+	vector<int>v3;
+	v3.assign(v1.begin(), v1.end());
 	printVector(v3);
 
-	vector<int>v4(v3);
+	vector<int>v4;
+	v4.assign(5, 9);
 	printVector(v4);
 }
 int main()
