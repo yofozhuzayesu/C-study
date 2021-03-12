@@ -1,53 +1,25 @@
 #include<iostream>
-#include<queue>
 using namespace std;
 
 /*
-	queue容器(队列容器)
-	queue是一种先进先出的数据结构，他有两个出口，队头只能出数据，队尾只能进数据
-	队列容器允许从一端新增元素，从另一端移除元素
-	队列中只有队头和队尾才可以被外部使用，因此队列不允许有遍历行为
-	
-	构造函数：
-	queue<T> que;
-	queue<T> que(const queue &que);
+	List 容器（链表）
+	功能：将数据进行链式存储
+	list：是一种物理存储单元上非连续的存储结构，数据元素的逻辑结构是通过链表中的指针连接实现的
+	链表的组成：链表由一系列结点组成
+	结点的组成：一个是存储数据元素的数据域，另一个是存储下一个结点地址的指针域
+	STL中的链表是一个双向循环链表（有前驱和后继，并且最后一个结点连接第一个结点）
 
-	赋值操作：
-	queue& opetator=(const queue &que)
+	链表优点：可以对任意位置进行快速的插入或删除元素 并且采用动态存储分配，不会造成内存浪费和溢出
+	链表缺点：对于容器的遍历速度没有数组快  占用的空间会比数组大
 
-	数据存取
-	push(elem)      //往队尾加元素
-	pop()           //从队头移除第一个元素
-	back()          //返回最后一个元素   队尾的元素
-	front()         //返回第一个元素     队头的元素
-
-	大小操作：
-	empty()
-	size()
+	由于链表的存储方式不是连续的内存空间，因此链表list中的迭代器只支持前移和后移，属于双向迭代器
+	List有一个重要性质：插入操作和删除操作都不会造成原有的list迭代器的失效，在vector中插入数据后可能会重新开辟一块内存空间，迭代器（指针）会发生变化
  */
 
-void test01()
-{
-	queue<int> que;
-	que.push(10);
-	que.push(20);
-	que.push(30);
-	que.push(40);
-	que.push(50);
-	cout << "最后一个值为：" << que.back() << endl;
-	cout << "第一个元素为：" << que.front() << endl;
-	cout << "队列大小为" << que.size() << endl;
 
-	//出队
-	que.pop();
-	cout << "出队一个元素后最后一个值为：" << que.back() << endl;
-	cout << "出队一个元素后第一个元素为：" << que.front() << endl;
-	cout << "出队一个元素后队列大小为" << que.size() << endl;
-}
 
 int main()
 {
-	test01();
 	system("pause");
 	return 0;
 }
