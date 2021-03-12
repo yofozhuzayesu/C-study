@@ -1,43 +1,98 @@
 #include<iostream>
 #include<deque>
+#include<vector>
+#include<string>
 #include<algorithm>
 using namespace std;
 
 /*
-	deque容器排序
-	sort(iterator beg,iterator end)  //对beg和end区间的元素进行排序
+	案例：评委打分
+	有5名选手：选手ABCDE,10个评委分别对每一名选手打分，去除最高分，去除评委中最低分，取平均分
 
+	实现步骤：
+	1.创建五名选手，放到vector中
+	2.遍历vector容器，取出来每一个选手，执行for循环，可以把10个评分打分到deque容器中
+	3.sort算法对deque容器中分组排序，去除最高分和最低分
+	4.deque容器遍历一遍，累加总分
+	5.获取平均分
 */
 
-void printDeque(const deque<int> &d)
+//选手类
+class person
 {
-	for (deque<int>::const_iterator it = d.begin(); it != d.end(); it++)
+public:
+	person() {};
+	person(string name, int score)
 	{
-		cout << *it << " ";
+		this->m_name = name;
+		this->m_score = score;
 	}
-	cout << endl;
-}
+	string m_name;
+	int m_score;
+};
 
-void test01()
+//创建选手
+void creatPerson(vector<person>&v)
 {
-	deque<int> d1;
-	d1.push_back(60);
-	d1.push_back(20);
-	d1.push_back(40);
-	d1.push_back(30);
-	d1.push_back(10);
-
-	//排序之前
-	printDeque(d1);
-
-	//排序之后  sort默认排序是升序  
-	//对于支持随机访问的迭代器的容器，都可以利用sort算法直接对其进行排序 例如vector
-	sort(d1.begin(), d1.end());
-	printDeque(d1);
+	string nameseed = "ABCDE";
+	for (int i = 0; i < 5; i++)
+	{
+		string name = "选手";
+		name += nameseed[i];
+		//默认平均分
+		int score = 0;
+		person p(name, score);
+		//将创建的对象放入到容器中
+		v.push_back(p);
+	}
 }
+
+//打分  最后只需要知道平均分即可
+void setScore(vector<person>&v)
+{
+	for (vector<person>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		//设置一个容器，将评委的打分放入
+		deque<int>d;
+		for (int i = 0; i < 10; i++)
+		{
+			int score = rand() % 41 + 60;//rand()%41  表示产生0-40之间的随机数
+			d.push_back(score);
+			cout << score << "  ";
+		}
+		cout << endl;
+		//先排序
+		sort(d.begin(), d.end());
+
+		//累加 并去除最高分和最低分
+		int sum = 0;
+		for (deque<int>::iterator dit = d.begin()+1; dit != d.end()-1; dit++)
+		{
+			sum += (*dit);
+		}
+
+
+		//计算平均分
+		(*it).m_score = sum / 8;
+	}
+}
+
 int main()
 {
-	test01();
+	
+	//1.创建五名选手
+	vector<person>v;
+	creatPerson(v);
+
+	//2.给五名选手打分
+	setScore(v);
+
+	//3.显示最后得分
+	for (vector<person>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		cout << (*it).m_name << "  " << (*it).m_score <<endl;
+	}
+
 	system("pause");
 	return 0;
 }
