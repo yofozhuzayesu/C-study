@@ -3,15 +3,14 @@
 using namespace std;
 
 /*
-	vector容器的容量和大小操作
-	函数原型：
-	empty()                //判断容器是否为空
-	capacity()             //容器的容量
-	size()                 //返回容器中元素的个数
-	resize(int num)        //重新指定容器的长度为num，若容器变长，则以默认值填充新位置
-						   //如果容器变短，则末尾超出容器长度的元素被删除
-	resize(int num,elem)   //重新指定容器的长度为num，若容器变长，则以elem值填充新位置
-	                       //如果容器变短，则末尾超出容器长度的元素被删除
+	vector插入和删除操作
+	push_back(ele);                            //尾部插入元素ele
+	pop_back();								   //删除最后一个元素
+	insert(const_iterator pos,ele)             //迭代器指向位置pos插入元素ele
+	insert(consr_iterator pos,int count,ele)   //迭代器指向位置pos插入count个元素ele
+	erase(const_iterator pos)                  //删除迭代器指向的元素
+	erase(const_iterator start,const_iterator end)//删除迭代器从start到end之间的元素
+	clear()                                    //删除容器中所有的元素
 
 */
 
@@ -20,38 +19,41 @@ void printVector(vector<int>&v)
 	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
 	{
 		cout << *it << " ";
+
 	}
 	cout << endl;
 }
 void test01()
 {
 	vector<int>v1;
-	for (int i = 0; i < 10; i++)
-	{
-		v1.push_back(i);
-	}
+	//尾插
+	v1.push_back(10);
+	v1.push_back(20);
+	v1.push_back(30);
+	v1.push_back(40);
+	v1.push_back(50);
 	printVector(v1);
 
-	//判断容器是否为空
-	//empty()函数返回值为bool类型
-	if (v1.empty())
-	{
-		cout << "v1为空" << endl;
-	}
-	else
-	{
-		cout << "v1不为空" << endl;
-	}
+	//尾删
+	v1.pop_back();
+	printVector(v1);
 
-	//获得容器的容量 13 
-	cout << v1.capacity() << endl;
-	//获得v1的大小
-	cout << v1.size() << endl;
+	//插入 第一个参数是迭代器
+	v1.insert(v1.begin(), 100);//在头部插入100
+	printVector(v1);
 
-	//重新指定大小
-	v1.resize(15);
-	printVector(v1);//如果重新指定的过长，默认用0填充新的位置
-	v1.resize(19, 100);//或者利用100填充
+	v1.insert(v1.begin(), 2, 500);
+	printVector(v1);
+
+	//删除迭代器所指向的元素
+	v1.erase(v1.begin());
+	printVector(v1);
+	//删除头三个元素
+	v1.erase(v1.begin(),v1.begin()+3);
+	printVector(v1);
+
+	//清空
+	v1.clear();
 	printVector(v1);
 }
 
