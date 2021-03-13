@@ -3,12 +3,12 @@
 using namespace std;
 
 /*
-	List赋值和交换
+	list大小操作
+	size()
+	empty()
+	resize(num)
+	resize(num,elem)
 
-	assign(beg,end)
-	assign(n,elem)
-	list& operator=(const list&l)
-	swap(lst)
  */
 
 void printList(const list<int>&L)
@@ -32,43 +32,29 @@ void test01()
 	//遍历容器
 	printList(l1);
 
-	//assign赋值操作
-	list<int> l2;
-	l2.assign(l1.begin(), l1.end());
-	printList(l2);
-
-	//assing赋值操作  n个elem
-	list<int>l3;
-	l3.assign(5, 6);
-	printList(l3);
+	//size() 和empty()
+	if (l1.empty())
+	{
+		cout << "l1容器为空" << endl;
+	}
+	else
+	{
+		cout << "l1容器不为空" << endl;
+	}
+	cout << "l1中的元素个数为：" << l1.size() << endl;
 	
+	//resize
+	l1.resize(6);
+	printList(l1);//默认用0填充
+	l1.resize(15, 2);//指定用2填充
+	printList(l1);
+
 }
 
-//交换操作
-void test02()
-{
-	list<int>l1;
 
-	//添加数据
-	l1.push_back(10);
-	l1.push_back(20);
-	l1.push_back(30);
-	l1.push_back(40);
-
-	list<int>l2(10, 100);
-	cout << "交换前：" << endl;
-	printList(l1);
-	printList(l2);
-
-	l1.swap(l2);
-	cout << "交换后；" << endl;
-	printList(l1);
-	printList(l2);
-}
 int main()
 {
-	//test01();
-	test02();
+	test01();
 	system("pause");
 	return 0;
 }
