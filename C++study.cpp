@@ -1,25 +1,52 @@
 #include<iostream>
+#include<list>
 using namespace std;
 
 /*
-	List 容器（链表）
-	功能：将数据进行链式存储
-	list：是一种物理存储单元上非连续的存储结构，数据元素的逻辑结构是通过链表中的指针连接实现的
-	链表的组成：链表由一系列结点组成
-	结点的组成：一个是存储数据元素的数据域，另一个是存储下一个结点地址的指针域
-	STL中的链表是一个双向循环链表（有前驱和后继，并且最后一个结点连接第一个结点）
+	List构造函数
 
-	链表优点：可以对任意位置进行快速的插入或删除元素 并且采用动态存储分配，不会造成内存浪费和溢出
-	链表缺点：对于容器的遍历速度没有数组快  占用的空间会比数组大
-
-	由于链表的存储方式不是连续的内存空间，因此链表list中的迭代器只支持前移和后移，属于双向迭代器
-	List有一个重要性质：插入操作和删除操作都不会造成原有的list迭代器的失效，在vector中插入数据后可能会重新开辟一块内存空间，迭代器（指针）会发生变化
+	list<T> lst;
+	list(beg,end);       //拷贝构造函数将[beg,end)中的元素拷贝给本身
+	list(n,elem);
+	list(const list &lst)
  */
 
+void printList(const list<int>&L)
+{
+	for (list<int>::const_iterator it = L.begin(); it != L.end(); it++)
+	{
+		cout << *it << "  ";
+	}
+	cout << endl;
+}
+void test01()
+{
+	list<int>l1;
 
+	//添加数据
+	l1.push_back(10);
+	l1.push_back(20);
+	l1.push_back(30);
+	l1.push_back(40);
+
+	//遍历容器
+	printList(l1);
+
+	//区间构造
+	list<int>l2(l1.begin(), l1.end());//list的遍历器不能执行+-操作
+	printList(l2);
+
+	//拷贝构造
+	list<int>l3(l2);
+	printList(l3);
+
+	list<int>l4(5, 6);
+	printList(l4);
+}
 
 int main()
 {
+	test01();
 	system("pause");
 	return 0;
 }
