@@ -3,12 +3,12 @@
 using namespace std;
 
 /*
-	List构造函数
+	List赋值和交换
 
-	list<T> lst;
-	list(beg,end);       //拷贝构造函数将[beg,end)中的元素拷贝给本身
-	list(n,elem);
-	list(const list &lst)
+	assign(beg,end)
+	assign(n,elem)
+	list& operator=(const list&l)
+	swap(lst)
  */
 
 void printList(const list<int>&L)
@@ -32,21 +32,43 @@ void test01()
 	//遍历容器
 	printList(l1);
 
-	//区间构造
-	list<int>l2(l1.begin(), l1.end());//list的遍历器不能执行+-操作
+	//assign赋值操作
+	list<int> l2;
+	l2.assign(l1.begin(), l1.end());
 	printList(l2);
 
-	//拷贝构造
-	list<int>l3(l2);
+	//assing赋值操作  n个elem
+	list<int>l3;
+	l3.assign(5, 6);
 	printList(l3);
-
-	list<int>l4(5, 6);
-	printList(l4);
+	
 }
 
+//交换操作
+void test02()
+{
+	list<int>l1;
+
+	//添加数据
+	l1.push_back(10);
+	l1.push_back(20);
+	l1.push_back(30);
+	l1.push_back(40);
+
+	list<int>l2(10, 100);
+	cout << "交换前：" << endl;
+	printList(l1);
+	printList(l2);
+
+	l1.swap(l2);
+	cout << "交换后；" << endl;
+	printList(l1);
+	printList(l2);
+}
 int main()
 {
-	test01();
+	//test01();
+	test02();
 	system("pause");
 	return 0;
 }
