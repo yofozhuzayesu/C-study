@@ -1,72 +1,80 @@
 #include<iostream>
 #include<list>
 #include<ctime>
+#include<string>
 using namespace std;
 
 /*
-	list反转和排序
+	排序案例
+	案例描述：将person自定义数据类型进行排序，Person中属性有姓名、年龄、身高
+	排序规则：按照年龄进行升序，如果年龄相同按照身高进行降序
 
-	reverse();//反转
-	sort();//排序
-
-	所有不支持随机访问迭代器的容器，不可以用标准算法
-	不支持随机访问迭代器的容器，内部都会提供一些对应的算法
  */
 
-void printList(const list<int>&L)
+class person
 {
-	for (list<int>::const_iterator it = L.begin(); it != L.end(); it++)
+public:
+	person() {};
+	person(string name,int age,int height)
 	{
-		cout << *it << "  ";
+		this->m_name = name;
+		this->m_height = height;
+		this->m_age = age;
 	}
-	cout << endl;
+	string m_name;
+	int m_age;
+	int m_height;
+};
+
+//遍历输出
+void printList(const list<person>l)
+{
+	for (list<person>::const_iterator it = l.begin(); it != l.end(); it++)
+	{
+		cout << (*it).m_name << "  " << (*it).m_age << "  " << (*it).m_height << endl;
+	}
+}
+
+//指定排序规则
+bool myCompare(person &p1, person &p2)
+{
+	//按照年龄升序
+	if (p1.m_age==p2.m_age)
+	{
+		//年龄相同的情况下  按身高降序
+		return p1.m_height > p2.m_height;
+	}
+	return p1.m_age < p2.m_age;
 }
 void test01()
 {
-	list<int>l;
-	//尾插
-	l.push_back(10);
-	l.push_back(20);
-	l.push_back(30);
-	l.push_back(40);
-	printList(l);//10 20 30 40 
-	
-	//反转
-	l.reverse();
-	printList(l);// 40 30 20 10
-}
+	list<person>lst;
+	person p1("张三", 23, 178);
+	person p2("李四", 45, 196);
+	person p3("王五", 23, 187);
+	person p4("陈六", 19, 185);
+	person p5("徐七", 20, 177);
+	person p6("刘八", 20, 179);
 
-
-//若想降序排列 需要重载sort函数，重载的条件的是形参不同
-//将该函数放在sort内，会判断是使用降序还是升序
-bool myCompare(int v1, int v2)
-{
-	//降序  让第一个数>第二个数
-	return v1 > v2;
-}
-//排序
-void test02()
-{
-	list<int>l;
-	srand(time(NULL));//利用时间做种子
-	for (int i = 0; i < 10; i++)
-	{
-		
-		int num = rand() % 41 + 60;
-		l.push_back(num);
-	}
+	lst.push_back(p1);
+	lst.push_back(p2);
+	lst.push_back(p3);
+	lst.push_back(p4);
+	lst.push_back(p5);
+	lst.push_back(p6);
 	cout << "排序前：" << endl;
-	printList(l);
+	printList(lst);
+
+	//排序
+	lst.sort(myCompare);
+	cout << "****************************" << endl;
 	cout << "排序后：" << endl;
-	//l.sort();//默认按升序排列
-	l.sort(myCompare);//按降序排列
-	printList(l);
+	printList(lst);
 }
 
 int main()
 {
-	//test01();
-	test02();
+	test01();
 	system("pause");
 	return 0;
 }
