@@ -1,125 +1,51 @@
 #include<iostream>
-#include<string>
-#include<set>
+#include<map>
 using namespace std;
 
 /*
-	set容器排序
-	set容器默认排序规则为从大到小，掌握如何改变排序规则
+	map/multimap基本概念
+	map中所有元素都是pair
+	pair中第一个元素为key（键值），起到索引作用，第二个元素为value（实值）
+	所有元素都会根据元素的键值自动排序
 
-	技术点：利用仿函数，可以改变排序规则
+	本质：map/multimap属于关联式容器，底层结构是用二叉树实现的
+
+	优点：可以根据key值快速找到value指
+
+	区别
+	map不允许容器中有重复key值元素
+	multimap允许容器中有重复key值元素
  */
 
+/*
+	构造：
+	map<T1,T2>mp;
+	map(const map &mp);   //拷贝构造
+	赋值：
+	map& operator=(const map &mp);//重载等号运算符
+*/
 
-
-//利用仿函数改变set默认排序规则
-class myCompare
-{
-public:
-	bool operator()(int v1,int v2)
-	{
-		return v1 > v2;
-	}
-};
-
-//自定义数据类型
-class person
-{
-public:
-	person() {};
-	person(string name,int age)
-	{
-		this->m_name = name;
-		this->m_age = age;
-	}
-	string m_name;
-	int m_age;
-};
-
-
-//遍历循环--整形
-void printSet1(const set<int> s)
-{
-	for (set<int>::const_iterator it = s.begin(); it != s.end(); it++)
-	{
-		cout << *it << " ";
-	}
-	cout << endl;
-}
-
-//循环遍历--降序
-void printSet2(const set<int, myCompare> s)
-{
-	for (set<int, myCompare>::const_iterator it = s.begin(); it != s.end(); it++)
-	{
-		cout << *it << " ";
-	}
-	cout << endl;
-}
-
-//存放内置数据类型
 void test01()
 {
-	set<int>s1;
-	//插入后会默认按升序排列
-	s1.insert(10);
-	s1.insert(50);
-	s1.insert(20);
-	s1.insert(30);
-	s1.insert(60);
-	//遍历输出
-	printSet1(s1);
+	map<int, int>mp1;
+	//map中的元素都是对组
+	mp1.insert(pair<int, int>(1, 10));
+	mp1.insert(pair<int, int>(4, 20));
+	mp1.insert(pair<int, int>(2, 30));
+	mp1.insert(pair<int, int>(3, 40));
 
-	//指定排序规则为从大到小
-	set<int,myCompare>s2;
-	s2.insert(10);
-	s2.insert(50);
-	s2.insert(20);
-	s2.insert(30);
-	s2.insert(60);
-	//遍历输出
-	printSet2(s2);
-}
-
-//利用仿函数改变排序规则
-class comparePerson
-{
-public:
-	bool operator()(const person &p1, const person &p2)
+	for (map<int,int>::const_iterator it = mp1.begin(); it != mp1.end(); it++)
 	{
-		//按年龄降序排列
-		return p1.m_age > p2.m_age;
+		cout << (*it).second << " ";//10 30 40 20  默认按key升序排序
 	}
-};
-//set存放自定义数据类型
-void test02()
-{
-	//对于自定义数据类型，都会制定排序规则，否则无法运行
-	person p1("张三", 18);
-	person p2("李四", 20);
-	person p3("王五", 17);
-	person p4("陈六", 20);
-	person p5("赵七", 19);
+	cout << endl;
 
-	set<person,comparePerson> s1;
-	s1.insert(p1);
-	s1.insert(p2);
-	s1.insert(p3);
-	s1.insert(p4);
-	s1.insert(p5);
 
-	for (set<person,comparePerson>::iterator it = s1.begin(); it != s1.end(); it++)
-	{
-		cout << (*it).m_name << "   " << (*it).m_age << endl;
-	}
-
-	//按照年龄降序排序，如果有年龄相同，则只会插入一个
 }
 
 int main()
 {
-	//test01();
-	test02();
+	test01();
 	system("pause");
 	return 0;
 }
