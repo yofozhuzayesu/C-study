@@ -1,28 +1,26 @@
 #include<iostream>
 #include<set>
+#include<ctime>
 using namespace std;
 
 /*
-	set/multiset容器
-	所有元素都会在插入的时自动排序
+	set/multiset容器大小和交换   插入和删除
+	size();
+	empty();
+	swap();
 
-	本质：属于关联式容器，底层结构是用二叉树实现
+	insert(elem)
+	clear();
+	erase(pos);
+	erase(beg,end);
+	erase(elem);          //删除容器中值为elem的元素
 
-	set/multiset区别
-	set不允许容器中有重复的元素
-	multiset允许容器中有重复的元素
-
-	构造：
-	set<T> st;
-	set(const set &st)
-	赋值：
-	set& operator=(const set &st)
 
  */
 
 void printSet(const set<int>st)
 {
-	for (set<int>::iterator it =st.begin(); it != st.end(); it++)
+	for (set<int>::iterator it = st.begin(); it != st.end(); it++)
 	{
 		cout << *it << " ";
 	}
@@ -41,9 +39,31 @@ void test01()
 	s1.insert(40);
 
 	printSet(s1);
+	if (s1.empty())
+	{
+		cout << "s1为空" << endl;
+	}
+	else
+	{
+		cout << "s1不为空" << endl;
+	}
 
-	//拷贝构造
-	set<int>s2(s1);
+	cout << "s1中元素个数为：" << s1.size() << endl;
+
+
+	set<int>s2;
+	srand(time(NULL));
+	for (int i = 0; i < 5; i++)
+	{
+		int num = rand() % 41 + 60;
+		s2.insert(num);
+	}
+	printSet(s2);
+
+	s2.swap(s1);
+	cout << "************************" << endl;
+	cout << "交换后：" << endl;
+	printSet(s1);
 	printSet(s2);
 }
 
