@@ -1,21 +1,11 @@
 #include<iostream>
 #include<set>
-#include<ctime>
 using namespace std;
 
 /*
-	set/multiset容器大小和交换   插入和删除
-	size();
-	empty();
-	swap();
-
-	insert(elem)
-	clear();
-	erase(pos);
-	erase(beg,end);
-	erase(elem);          //删除容器中值为elem的元素
-
-
+	set查找和统计
+	find(key)             //查找key是否存在，若存在，返回该键的元素的迭代器；若不存在，返回set.end（）
+	count(key)            //统计key的元素个数  对于set而言 结果为0或1
  */
 
 void printSet(const set<int>st)
@@ -37,34 +27,21 @@ void test01()
 	s1.insert(20);
 	s1.insert(10);
 	s1.insert(40);
-
 	printSet(s1);
-	if (s1.empty())
+
+	//查找
+	set<int>::iterator pos = s1.find(300);//返回的是迭代器，所以需要一个迭代器变量来接收
+	if (pos != s1.end())
 	{
-		cout << "s1为空" << endl;
+		cout << "找到了元素：" << *pos << endl;
 	}
 	else
 	{
-		cout << "s1不为空" << endl;
+		cout << "未找到元素" << endl;
 	}
 
-	cout << "s1中元素个数为：" << s1.size() << endl;
-
-
-	set<int>s2;
-	srand(time(NULL));
-	for (int i = 0; i < 5; i++)
-	{
-		int num = rand() % 41 + 60;
-		s2.insert(num);
-	}
-	printSet(s2);
-
-	s2.swap(s1);
-	cout << "************************" << endl;
-	cout << "交换后：" << endl;
-	printSet(s1);
-	printSet(s2);
+	//统计
+	cout << "容器中30的个数为：" << s1.count(30) << endl;
 }
 
 int main()
