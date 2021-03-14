@@ -3,12 +3,9 @@
 using namespace std;
 
 /*
-	插入和删除
-	insert(elem)
-	clear()
-	erase(pos)    //删除迭代器所指的元素，返回下一个元素的迭代器
-	erase(beg,end)
-	erase(key)    //删除容器中值我key的元素
+	查找和统计
+	find(key)      //查找key是否存在，若存在，返回该键的元素的迭代器；若不存在，返回set.end()
+	count(key)     //统计key的元素个数 对于map容器而言 结果为0或1
 */
 void printMap(const map<int, int> &m)
 {
@@ -20,20 +17,23 @@ void printMap(const map<int, int> &m)
 void test01()
 {
 	map<int, int>mp1;
-	//map中的元素都是对组
+	
 	mp1.insert(pair<int, int>(1, 10));
+	mp1.insert(pair<int, int>(4, 60));
+	mp1.insert(pair<int, int>(7, 50));
+	mp1.insert(pair<int, int>(3, 60));
 
-	//第二种插入办法
-	mp1.insert(make_pair<int, int>(3, 40));
-
-	//第三种插入办法
-	mp1.insert(map<int, int>::value_type(2, 60));
-
-	//第四种  map重载了[] （但是不推荐）
-	//中括号的意义在于利用key来访问value
-	mp1[4] = 70;
-	//cout << mp1[5] << endl;//在没有插入key值为5的元素时，会默认为0
-	printMap(mp1);
+	//查找key=3的数据
+	map<int, int>::iterator it = mp1.find(9);
+	if (it != mp1.end())
+	{
+		cout << "找到了" << endl;
+		cout << "key值为：" << (*it).first << "   " << "value:" << (*it).second << endl;
+	}
+	else
+	{
+		cout << "未找到" << endl;
+	}
 	
 }
 
