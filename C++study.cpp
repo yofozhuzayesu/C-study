@@ -3,10 +3,12 @@
 using namespace std;
 
 /*
-	大小和交换
-	size()
-	empty()
-	swap(st)     //交换两个集合容器
+	插入和删除
+	insert(elem)
+	clear()
+	erase(pos)    //删除迭代器所指的元素，返回下一个元素的迭代器
+	erase(beg,end)
+	erase(key)    //删除容器中值我key的元素
 */
 void printMap(const map<int, int> &m)
 {
@@ -20,38 +22,19 @@ void test01()
 	map<int, int>mp1;
 	//map中的元素都是对组
 	mp1.insert(pair<int, int>(1, 10));
-	mp1.insert(pair<int, int>(4, 20));
-	mp1.insert(pair<int, int>(2, 30));
-	mp1.insert(pair<int, int>(3, 40));
-	if (mp1.empty())
-	{
-		cout << "空" << endl;
-	}
-	else
-	{
-		cout << "非空" << endl;
-	}
-	cout << "该容器的大小为" << mp1.size() << endl;
-	//遍历输出 默认按key值升序排列
-	printMap(mp1);
 
-	cout << "------------分割线-------------" << endl;
-	map<int, int>mp2;
-	mp2.insert(pair<int, int>(9, 10));
-	mp2.insert(pair<int, int>(5, 90));
-	mp2.insert(pair<int, int>(2, 60));
-	mp2.insert(pair<int, int>(4, 70));
-	mp2.insert(pair<int, int>(8, 20));
-	mp2.insert(pair<int, int>(1, 50));
-	printMap(mp2);
+	//第二种插入办法
+	mp1.insert(make_pair<int, int>(3, 40));
 
-	//交换操作
-	cout << "------------分割线-------------" << endl;
-	mp1.swap(mp2);
-	cout << "这是交换后mp1：" << endl;
+	//第三种插入办法
+	mp1.insert(map<int, int>::value_type(2, 60));
+
+	//第四种  map重载了[] （但是不推荐）
+	//中括号的意义在于利用key来访问value
+	mp1[4] = 70;
+	//cout << mp1[5] << endl;//在没有插入key值为5的元素时，会默认为0
 	printMap(mp1);
-	cout << "这是交换后mp2：" << endl;
-	printMap(mp2);
+	
 }
 
 int main()
