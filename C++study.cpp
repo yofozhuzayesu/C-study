@@ -3,28 +3,18 @@
 using namespace std;
 
 /*
-	map/multimap基本概念
-	map中所有元素都是pair
-	pair中第一个元素为key（键值），起到索引作用，第二个元素为value（实值）
-	所有元素都会根据元素的键值自动排序
-
-	本质：map/multimap属于关联式容器，底层结构是用二叉树实现的
-
-	优点：可以根据key值快速找到value指
-
-	区别
-	map不允许容器中有重复key值元素
-	multimap允许容器中有重复key值元素
- */
-
-/*
-	构造：
-	map<T1,T2>mp;
-	map(const map &mp);   //拷贝构造
-	赋值：
-	map& operator=(const map &mp);//重载等号运算符
+	大小和交换
+	size()
+	empty()
+	swap(st)     //交换两个集合容器
 */
-
+void printMap(const map<int, int> &m)
+{
+	for (map<int, int>::const_iterator it = m.begin(); it != m.end(); it++)
+	{
+		cout << "key值:" << (*it).first << "  " << "Value:" << (*it).second << endl;
+	}
+}
 void test01()
 {
 	map<int, int>mp1;
@@ -33,14 +23,35 @@ void test01()
 	mp1.insert(pair<int, int>(4, 20));
 	mp1.insert(pair<int, int>(2, 30));
 	mp1.insert(pair<int, int>(3, 40));
-
-	for (map<int,int>::const_iterator it = mp1.begin(); it != mp1.end(); it++)
+	if (mp1.empty())
 	{
-		cout << (*it).second << " ";//10 30 40 20  默认按key升序排序
+		cout << "空" << endl;
 	}
-	cout << endl;
+	else
+	{
+		cout << "非空" << endl;
+	}
+	cout << "该容器的大小为" << mp1.size() << endl;
+	//遍历输出 默认按key值升序排列
+	printMap(mp1);
 
+	cout << "------------分割线-------------" << endl;
+	map<int, int>mp2;
+	mp2.insert(pair<int, int>(9, 10));
+	mp2.insert(pair<int, int>(5, 90));
+	mp2.insert(pair<int, int>(2, 60));
+	mp2.insert(pair<int, int>(4, 70));
+	mp2.insert(pair<int, int>(8, 20));
+	mp2.insert(pair<int, int>(1, 50));
+	printMap(mp2);
 
+	//交换操作
+	cout << "------------分割线-------------" << endl;
+	mp1.swap(mp2);
+	cout << "这是交换后mp1：" << endl;
+	printMap(mp1);
+	cout << "这是交换后mp2：" << endl;
+	printMap(mp2);
 }
 
 int main()
