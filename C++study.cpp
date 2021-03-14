@@ -3,9 +3,10 @@
 using namespace std;
 
 /*
-	set查找和统计
-	find(key)             //查找key是否存在，若存在，返回该键的元素的迭代器；若不存在，返回set.end（）
-	count(key)            //统计key的元素个数  对于set而言 结果为0或1
+	set和multiset区别
+	set不可以插入重复数据，而multiset可以
+	set插入数据的同时会返回插入结果，表示插入是否成功
+	multiset不会检测数据，因此可以插入重复数据
  */
 
 void printSet(const set<int>st)
@@ -16,37 +17,58 @@ void printSet(const set<int>st)
 	}
 	cout << endl;
 }
+
+void printMultiset(const multiset<int> ms)
+{
+	for (multiset<int>::const_iterator it = ms.begin(); it != ms.end(); it++)
+	{
+		cout << *it << " ";
+	}
+	cout << endl;
+}
 void test01()
 {
 	set<int>s1;
-
-	//set插入数据 只有insert方式
-	//插入的时候就自动升序排序了  并且不会出现重复值
-	s1.insert(30);
-	s1.insert(30);
-	s1.insert(20);
-	s1.insert(10);
-	s1.insert(40);
-	printSet(s1);
-
-	//查找
-	set<int>::iterator pos = s1.find(300);//返回的是迭代器，所以需要一个迭代器变量来接收
-	if (pos != s1.end())
+	pair<set<int>::iterator,bool> ret =  s1.insert(10);
+	if (ret.second)
 	{
-		cout << "找到了元素：" << *pos << endl;
+		cout << "第一次插入成功" << endl;
 	}
 	else
 	{
-		cout << "未找到元素" << endl;
+		cout << "第一次插入失败" << endl;
 	}
 
-	//统计
-	cout << "容器中30的个数为：" << s1.count(30) << endl;
+	pair<set<int>::iterator, bool> ret2 = s1.insert(10);
+	if (ret2.second)
+	{
+		cout << "第二次插入成功" << endl;
+	}
+	else
+	{
+		cout << "第二次插入失败" << endl;
+	}
+
+	
 }
 
+void test02()
+{
+	//multiset允许重复插入
+	multiset<int> ms1;
+	ms1.insert(10);
+	ms1.insert(10);
+	printMultiset(ms1);
+
+	//multiset的insert函数返回的是一个迭代器
+	multiset<int>::iterator it = ms1.insert(400);
+	cout << *it << endl;
+
+}
 int main()
 {
-	test01();
+	//test01();
+	test02();
 	system("pause");
 	return 0;
 }
