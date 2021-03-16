@@ -1,50 +1,48 @@
 #include<iostream>
 #include<functional>
+#include<vector>
+#include<algorithm>
 using namespace std;
 
 /*
-	内建函数对象：STL内建了一些函数对象
-
-	分类：
-	算术仿函数
-	关系仿函数
-	逻辑仿函数
-
-	使用方法和一般的函数完全相同
-	使用内建函数对象 需要引入头文件functional
-*/
-
-/*
-	算术仿函数
-	实现四则运算，其中negate是一元运算，其他都是二元运算
-	template<class T> T plus<T>          //加法仿函数
-	template<class T> T minus<T>         //减法仿函数
-	template<class T> T multiplies<T>    //乘法仿函数
-	template<class T> T divides<T>       //除法仿函数
-	template<class T> T modulus<T>       //取模仿函数
-	template<class T> T negate<T>        //取反仿函数
+	关系仿函数:实现关系对比
+	template<class T> bool equa_to<T>               //等于
+	template<class T> bool not _equa_to<T>          //不等于
+	template<class T> bool greater<T>            //大于
+	template<class T> bool greater_equal<T>         //大于等于
+	template<class T> bool less<T>                  //小于
+	template<class T> bool less_equal<T>            //小于等于
 
 */
-
-//取反操作
-void test01()
+void printVector(vector<int> v)
 {
-	negate<int> n;
-	cout << n(50) << endl;
+	for (vector<int>::iterator i = v.begin(); i!= v.end(); i++)
+	{
+		cout << *i << "   ";
+	}
+	cout << endl;
 }
 
-//四则运算
-void test02()
+//大于操作
+void test01()
 {
-	plus<int> p;
-	cout << p(10, 20) << endl;
-	minus<int> m;
-	cout << m(10, 50) << endl;
+	vector<int> v;
+	v.push_back(90);
+	v.push_back(70);
+	v.push_back(40);
+	v.push_back(80);
+	v.push_back(60);
+	printVector(v);
+
+	//利用编译器提供的函数对象实现降序排列
+	//如果sort算法不传第三个参数的话，则重载的是less排序规则的函数
+	sort(v.begin(), v.end(), greater<int>());
+	printVector(v);
+
 }
 int main()
 {
 	test01();
-	test02();
 	system("pause");
 	return 0;
 }
