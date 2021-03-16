@@ -1,28 +1,18 @@
 #include<iostream>
 #include<vector>
+#include<string>
 #include<algorithm>
 using namespace std;
 
 /*
-	遍历算法  搬运容器到另一个容器中
-	transform(iterator beg1,iterator end1,itetator beg2,_func)
-	_func  如果是普通函数的话就写函数名即可  是函数对象的话 需要写括号
+	查找算法find 查找指定元素，找到返回指定元素的迭代器，找不到返回结束迭代器end
 
+	find(iterator beg,iterator end,value)  -----迭代器 迭代器  要查找的值
 */
 
-void myprint(int v)
-{
-	cout << v << " ";
-	
-}
-
-//搬运执行的相当是一个赋值操作，所以需要返回一个值
-int myTrans(int v)
-{
-	return v;
-}
 
 
+//查找内置数据
 void test01()
 {
 	vector<int>v;
@@ -30,15 +20,74 @@ void test01()
 	{
 		v.push_back(i);
 	}
-	vector<int>v2;
-	//搬运之前需要先设置目标容器的容量 不然会崩
-	v2.resize(v.size());
-	transform(v.begin(), v.end(), v2.begin(), myTrans);
-	for_each(v2.begin(), v2.end(), myprint);
+	//查找容器中是否有5这个元素
+	vector<int>::iterator it = find(v.begin(), v.end(), 5);
+	if (it !=v.end())
+	{
+		cout << "找到了元素" << (*it) << endl;
+	}
+	else
+	{
+		cout << "未找到该元素" << endl;
+	}
+}
+
+//查找自定义数据类型
+//因为find函数的底层 是判断*First == value  对于自定义数据类型无法比较  需要重载==
+class person
+{
+public:
+	person() {};
+	person(string name, int age)
+	{
+		this->m_name = name;
+		this->m_age = age;
+	}
+	//重载==
+	bool operator==(const person &p)
+	{
+		if (this->m_name ==p.m_name && this->m_age==p.m_age)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	string m_name;
+	int m_age;
+};
+
+void test02()
+{
+	vector<person> v;
+	person p1("张三", 18);
+	person p2("李四", 36);
+	person p3("王五", 28);
+	person p4("陈六", 16);
+	person p5("刘七", 18);
+	v.push_back(p1);
+	v.push_back(p2);
+	v.push_back(p3);
+	v.push_back(p4);
+	v.push_back(p5);
+
+	vector<person>::iterator it = find(v.begin(), v.end(), p2);
+
+	if (it != v.end())
+	{
+		cout << "找到了元素" << (*it).m_name << endl;
+	}
+	else
+	{
+		cout << "未找到该元素" << endl;
+	}
 }
 int main()
 {
-	test01();
+	//test01();
+	test02();
 	system("pause");
 	return 0;
 }
