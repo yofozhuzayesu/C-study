@@ -5,39 +5,40 @@
 using namespace std;
 
 /*
-	关系仿函数:实现关系对比
-	template<class T> bool equa_to<T>               //等于
-	template<class T> bool not _equa_to<T>          //不等于
-	template<class T> bool greater<T>            //大于
-	template<class T> bool greater_equal<T>         //大于等于
-	template<class T> bool less<T>                  //小于
-	template<class T> bool less_equal<T>            //小于等于
+	逻辑仿函数：实现逻辑运算
+	template<class T> bool logical_and<T>               //逻辑与
+	template<class T> bool logical_or<T>                //逻辑或
+	template<class T> bool logical_not<T>               //逻辑非
 
 */
-void printVector(vector<int> v)
+void printVector(vector<bool> v)
 {
-	for (vector<int>::iterator i = v.begin(); i!= v.end(); i++)
+	for (vector<bool>::iterator i = v.begin(); i!= v.end(); i++)
 	{
 		cout << *i << "   ";
 	}
 	cout << endl;
 }
 
-//大于操作
+//测试非
 void test01()
 {
-	vector<int> v;
-	v.push_back(90);
-	v.push_back(70);
-	v.push_back(40);
-	v.push_back(80);
-	v.push_back(60);
+	vector<bool>v;
+	v.push_back(true);
+	v.push_back(false);
+	v.push_back(true);
+	v.push_back(false);
+	
 	printVector(v);
 
-	//利用编译器提供的函数对象实现降序排列
-	//如果sort算法不传第三个参数的话，则重载的是less排序规则的函数
-	sort(v.begin(), v.end(), greater<int>());
-	printVector(v);
+	//利用逻辑非  将容器V搬运到容器V2中，并执行取反操作
+	vector<bool>v2;
+	v2.resize(v.size());
+
+	//搬运算法 transform  前两个参数是原容器的起止地址，第三个参数是新容器的起地址
+	transform(v.begin(), v.end(), v2.begin(), logical_not<bool>());
+	printVector(v2);
+	
 
 }
 int main()
