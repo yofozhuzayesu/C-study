@@ -5,39 +5,42 @@
 using namespace std;
 
 /*
-	谓词概念
-	返回bool类型的仿函数称为谓词
-	如果operator()接受一个参数，那么叫做一元谓词
-	如果operator()接受两个参数，那么叫做二元谓词
-
+	二元谓词
 */
-class Five
+void printVector(vector<int> v)
+{
+	for (vector<int>::iterator i = v.begin(); i != v.end(); i++)
+	{
+		cout << *i << "  ";
+	}
+	cout << endl;
+}
+class myCompare
 {
 public:
-	bool operator()(int val)
+	bool operator()(int v1, int v2)
 	{
-		return val > 5;
+		return v1 > v2;
 	}
 };
 void test01()
 {
 	vector<int>v;
-	for (int  i = 0; i < 10; i++)
-	{
-		v.push_back(i);
-	}
-
-	//需求：在容器中查找有没有大于5的数字
-	//需要使用到find_if算法  返回值是找到的第一个大于5的元素的迭代器
-	vector<int>::const_iterator it= find_if(v.begin(), v.end(), Five());//第三个参数是谓词，应该传入一个函数对象，但是用匿名函数对象也可以
-	if (it != v.end())
-	{
-		cout << "找到了大于5的数字为" << (*it) << endl;
-	}
-	else
-	{
-		cout << "未找到" << endl;
-	}
+	v.push_back(10);
+	v.push_back(40);
+	v.push_back(60);
+	v.push_back(30);
+	v.push_back(50);
+	//sort算法默认按照升序排序
+	sort(v.begin(), v.end());
+	cout << "升序排序为：";
+	printVector(v);
+	
+	//使用函数对象 改变算法策略 变成从小到大排序
+	//最后一个参数只用类名不够，需要加小括号
+	sort(v.begin(), v.end(),myCompare());
+	cout << "降序排序为：";
+	printVector(v);
 }
 
 int main()
