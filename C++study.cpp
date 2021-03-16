@@ -1,51 +1,50 @@
 #include<iostream>
-#include<string>
-#include<vector>
-#include<algorithm>
+#include<functional>
 using namespace std;
 
 /*
-	二元谓词
+	内建函数对象：STL内建了一些函数对象
+
+	分类：
+	算术仿函数
+	关系仿函数
+	逻辑仿函数
+
+	使用方法和一般的函数完全相同
+	使用内建函数对象 需要引入头文件functional
 */
-void printVector(vector<int> v)
-{
-	for (vector<int>::iterator i = v.begin(); i != v.end(); i++)
-	{
-		cout << *i << "  ";
-	}
-	cout << endl;
-}
-class myCompare
-{
-public:
-	bool operator()(int v1, int v2)
-	{
-		return v1 > v2;
-	}
-};
+
+/*
+	算术仿函数
+	实现四则运算，其中negate是一元运算，其他都是二元运算
+	template<class T> T plus<T>          //加法仿函数
+	template<class T> T minus<T>         //减法仿函数
+	template<class T> T multiplies<T>    //乘法仿函数
+	template<class T> T divides<T>       //除法仿函数
+	template<class T> T modulus<T>       //取模仿函数
+	template<class T> T negate<T>        //取反仿函数
+
+*/
+
+//取反操作
 void test01()
 {
-	vector<int>v;
-	v.push_back(10);
-	v.push_back(40);
-	v.push_back(60);
-	v.push_back(30);
-	v.push_back(50);
-	//sort算法默认按照升序排序
-	sort(v.begin(), v.end());
-	cout << "升序排序为：";
-	printVector(v);
-	
-	//使用函数对象 改变算法策略 变成从小到大排序
-	//最后一个参数只用类名不够，需要加小括号
-	sort(v.begin(), v.end(),myCompare());
-	cout << "降序排序为：";
-	printVector(v);
+	negate<int> n;
+	cout << n(50) << endl;
 }
 
+//四则运算
+void test02()
+{
+	plus<int> p;
+	cout << p(10, 20) << endl;
+	minus<int> m;
+	cout << m(10, 50) << endl;
+}
 int main()
 {
 	test01();
+	test02();
 	system("pause");
 	return 0;
 }
