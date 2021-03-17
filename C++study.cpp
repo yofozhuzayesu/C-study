@@ -2,12 +2,13 @@
 #include<vector>
 #include<algorithm>
 #include<string>
+#include<time.h>
 using namespace std;
 
 /*
-	排序算法sort 对容器内元素进行排序
-	sort(iterator beg,iterator end,_Pred)
-	_Pred谓词
+	洗牌： 指定范围内的元素随机调整次序
+	random_shuffle(iterator beg,iterator end)
+	若想每次乱序结果不一样，同样需要设置一个随机数种子
 */
 
 //遍历输出
@@ -28,21 +29,19 @@ public:
 //内置数据类型
 void test01()
 {
+
 	vector<int>v;
 	v.push_back(15);
 	v.push_back(30);
 	v.push_back(18);
 	v.push_back(21);
-	//默认按升序排序
-	sort(v.begin(), v.end());
+	
+	//随机数种子
+	srand((unsigned int)time(NULL));
+	//随机打乱顺序
+	random_shuffle(v.begin(), v.end());
 	for_each(v.begin(), v.end(), myprint);
 	cout << endl;
-
-	//利用谓词按降序排序
-	sort(v.begin(), v.end(), mySort());
-	for_each(v.begin(), v.end(), myprint);
-	cout << endl;
-
 
 }
 
@@ -63,15 +62,7 @@ void myPrint2(const person &p)
 {
 	cout << "姓名：" << p.m_name << "年龄：" << p.m_age << endl;
 }
-//自定义数据类型排序谓词
-class mySort2
-{
-public:
-	bool operator()(const person &p1, const person &p2)
-	{
-		return p1.m_age > p2.m_age;
-	}
-};
+
 void test02()
 {
 	vector<person> v;
@@ -83,13 +74,12 @@ void test02()
 	v.push_back(p2);
 	v.push_back(p3);
 	v.push_back(p4);
+	
+	//随机数种子
+	srand((unsigned int)time(NULL));
+	//随机打乱顺序
+	random_shuffle(v.begin(), v.end());
 	for_each(v.begin(), v.end(), myPrint2);
-	cout << endl;
-
-	//利用谓词按年龄从大到小排
-	sort(v.begin(), v.end(), mySort2());
-	for_each(v.begin(), v.end(), myPrint2);
-	cout << endl;
 }
 int main()
 {
