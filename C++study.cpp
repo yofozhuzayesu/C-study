@@ -5,11 +5,11 @@ using namespace std;
 
 /*
 	常用集合算法
-	set_union(iterator beg1,iterator end1,iterator beg2,iterator end2,iterator dest)
-	//求两个集合的并集
-	//两个集合必须是有序序列
-	//如果两个容器有相同的元素 只会取一个 
-	//但是一个容器内有相同的元素 会保留
+	set_difference(iterator beg1,iterator end1,iterator beg2,iterator end2,iterator dest)
+	求两个集合的差集 同样要求两个容器都是有序
+	两个容器有先后区别
+	v1和v2容器的差集 =  v1容器中不是v1和v2交集的部分
+	v2和v1容器的差集 =  v2容器中不是v1和v2交集的部分
 */
 
 //遍历输出
@@ -33,20 +33,22 @@ void test01()
 	v1.push_back(21);
 	sort(v1.begin(), v1.end());
 
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 18; i++)
 	{
 		v2.push_back(i);
 	}
 
-	//给目标容器开辟空间，最特殊的情况是 两个容器没有交集，则目标容器的大小为两个容器大小相加
-	//使用min算法 同样也包含在algorithm头文件内
-	vt.resize(v1.size()+ v2.size());
-	vector<int>::iterator itend =  set_union(v1.begin(), v1.end(), v2.begin(), v2.end(), vt.begin());
-	//如果不用一个itend接收的话，直接遍历到vt.end(),多余的部分还会被填充0
-	for_each(vt.begin(), vt.end(), myprint);
-	cout << endl;
+	//给目标容器开辟空间，最特殊的情况是 两个容器没有交集，则目标容器的大小等于最大的容器容量
+	//使用max算法 同样也包含在algorithm头文件内
+	vt.resize(max(v1.size(),v2.size()));
+
+	//求V1和V2的差集
+	//vector<int>::iterator itend =  set_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), vt.begin());
+	//for_each(vt.begin(), itend, myprint);
+
+	//求V2和V1的差集
+	vector<int>::iterator itend = set_difference(v2.begin(), v2.end(), v1.begin(), v1.end(), vt.begin());
 	for_each(vt.begin(), itend, myprint);
-	cout << endl;
 }
 
 int main()
