@@ -5,29 +5,44 @@
 using namespace std;
 
 /*
-	按条件统计元素出现次数
-	count_if(iterator beg,iterator end,_Pred)
-	/_Pred谓词
+	排序算法sort 对容器内元素进行排序
+	sort(iterator beg,iterator end,_Pred)
+	_Pred谓词
 */
 
-class greaterFive
+//遍历输出
+void myprint(int v)
+{
+	cout << v << "  ";
+}
+
+//降序谓词
+class mySort
 {
 public:
-	bool operator()(int v)
+	bool operator()(int v1, int v2)
 	{
-		return v > 5;
+		return v1 > v2;
 	}
 };
 //内置数据类型
 void test01()
 {
 	vector<int>v;
-	v.push_back(1);
-	v.push_back(10);
+	v.push_back(15);
 	v.push_back(30);
-	v.push_back(40);
-	int i = count_if(v.begin(), v.end(), greaterFive());
-	cout << "出现了" << i << "次" << endl;
+	v.push_back(18);
+	v.push_back(21);
+	//默认按升序排序
+	sort(v.begin(), v.end());
+	for_each(v.begin(), v.end(), myprint);
+	cout << endl;
+
+	//利用谓词按降序排序
+	sort(v.begin(), v.end(), mySort());
+	for_each(v.begin(), v.end(), myprint);
+	cout << endl;
+
 
 }
 
@@ -40,19 +55,21 @@ public:
 		this->m_name = name;
 		this->m_age = age;
 	}
-	bool operator()(const person &p)
-	{
-		return p.m_age > 18;
-	}
 	string m_name;
 	int m_age;
 };
-class Greater18
+//遍历输出
+void myPrint2(const person &p)
+{
+	cout << "姓名：" << p.m_name << "年龄：" << p.m_age << endl;
+}
+//自定义数据类型排序谓词
+class mySort2
 {
 public:
-	bool operator()(const person &p)
+	bool operator()(const person &p1, const person &p2)
 	{
-		return p.m_age > 18;
+		return p1.m_age > p2.m_age;
 	}
 };
 void test02()
@@ -64,12 +81,15 @@ void test02()
 	person p4("陈六", 35);
 	v.push_back(p1);
 	v.push_back(p2);
-	v.push_back(p2);
 	v.push_back(p3);
 	v.push_back(p4);
+	for_each(v.begin(), v.end(), myPrint2);
+	cout << endl;
 
-	int i = count_if(v.begin(), v.end(), Greater18());
-	cout << "年龄大于18的人有" << i << "人" << endl;
+	//利用谓词按年龄从大到小排
+	sort(v.begin(), v.end(), mySort2());
+	for_each(v.begin(), v.end(), myPrint2);
+	cout << endl;
 }
 int main()
 {
