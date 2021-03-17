@@ -5,10 +5,9 @@
 using namespace std;
 
 /*
-	merge 两个容器元素合并，并存储到另一容器中
-	merge(iterator beg1,iterator end1,iterator beg2,iterator end2,itetator dest)
-	//注意两个容器必须是有序的
-	//dest 目标容器开始迭代器
+	reverse 将容器内元素进行反转
+	reverse(iterator beg,iterator end)
+
 */
 
 //遍历输出
@@ -22,28 +21,20 @@ void test01()
 {
 
 	vector<int>v;
-	vector<int>v2;
 	v.push_back(15);
 	v.push_back(30);
 	v.push_back(18);
 	v.push_back(21);
 
-	for (int i = 0; i < 10; i++)
-	{
-		//v.push_back(i + 1);
-		v2.push_back(i);
-	}
+	cout << "反转之前的容器为：";
+	for_each(v.begin(), v.end(),myprint);
+	cout << endl;
 	
-	//目标容器
-	vector<int>vT;
-	//需要提前给目标容器给分配内存
-	vT.resize(v.size() + v2.size());
-	//需要给两个容器先排序 两个容器内的数据必须同为升序 或者降序
-	sort(v.begin(), v.end());
-	merge(v.begin(), v.end(), v2.begin(), v2.end(), vT.begin());
-	for_each(vT.begin(), vT.end(), myprint);
-	
-
+	//反转容器
+	reverse(v.begin(), v.end());
+	cout << "反转之后的容器为：";
+	for_each(v.begin(), v.end(), myprint);
+	cout << endl;
 }
 
 int main()
