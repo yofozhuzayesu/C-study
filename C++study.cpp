@@ -5,12 +5,21 @@
 using namespace std;
 
 /*
-	查找算法find 查找指定元素，找到返回指定元素的迭代器，找不到返回结束迭代器end
-
-	find(iterator beg,iterator end,value)  -----迭代器 迭代器  要查找的值
+	find_if	 按条件查找元素
+	find_if(iterator beg,iterator end,_Pred)
+	//按值查找元素，找到返回指定位置迭代器，找不到返回结束迭代器位置
+	//_Pred函数或者谓词（返回bool类型的仿函数）
 */
 
-
+//谓词
+class GreaterFive
+{
+public:
+	bool operator()(int v)
+	{
+		return v > 5;
+	}
+};
 
 //查找内置数据
 void test01()
@@ -20,8 +29,8 @@ void test01()
 	{
 		v.push_back(i);
 	}
-	//查找容器中是否有5这个元素
-	vector<int>::iterator it = find(v.begin(), v.end(), 5);
+	//查找容器中是否有>5的元素
+	vector<int>::iterator it = find_if(v.begin(), v.end(), GreaterFive());
 	if (it !=v.end())
 	{
 		cout << "找到了元素" << (*it) << endl;
@@ -33,7 +42,6 @@ void test01()
 }
 
 //查找自定义数据类型
-//因为find函数的底层 是判断*First == value  对于自定义数据类型无法比较  需要重载==
 class person
 {
 public:
@@ -43,10 +51,17 @@ public:
 		this->m_name = name;
 		this->m_age = age;
 	}
-	//重载==
-	bool operator==(const person &p)
+	string m_name;
+	int m_age;
+};
+
+//谓词
+class Personname
+{
+public:
+	bool operator()(person &p)
 	{
-		if (this->m_name ==p.m_name && this->m_age==p.m_age)
+		if (p.m_name=="张三"&&p.m_age==18)
 		{
 			return true;
 		}
@@ -55,14 +70,11 @@ public:
 			return false;
 		}
 	}
-	string m_name;
-	int m_age;
 };
-
 void test02()
 {
 	vector<person> v;
-	person p1("张三", 18);
+	person p1("张三", 19);
 	person p2("李四", 36);
 	person p3("王五", 28);
 	person p4("陈六", 16);
@@ -73,7 +85,7 @@ void test02()
 	v.push_back(p4);
 	v.push_back(p5);
 
-	vector<person>::iterator it = find(v.begin(), v.end(), p2);
+	vector<person>::iterator it = find_if(v.begin(), v.end(), Personname());
 
 	if (it != v.end())
 	{
